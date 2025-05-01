@@ -81,3 +81,58 @@ FROM Rooms;
 
 INSERT INTO Rooms (square_footage, floor)
 VALUES (:square_footage, :floor);
+
+
+--
+-- SQL for Invoices table
+--
+
+-- Display Invoices
+
+SELECT Invoices.invoice_ID, Recording_Sessions.artist_id, Invoices.session_ID, Invoices.session_cost, Invoices.invoice_paid
+FROM Invoices
+JOIN Recording_Sessions ON Invoice.session_ID = Recording_Sessions.session_ID;
+
+-- Add row to Invoices
+
+INSERT INTO Invoices (session_ID, session_cost):
+VALUES (:session_ID, :session_cost)
+
+-- Change invoice to paid
+
+UPDATE Invoices
+SET invoice_paid = 1
+WHERE session_ID = :session_ID
+
+
+--
+-- SQL for Recording_Sessions table
+--
+
+-- Display Recording_Sessions
+
+SELECT Recording_Sessions.session_ID, Recording_Sessions_has_Artists.artist_ID, Recording_Sessions.room_ID, Recording_Sessions.duration
+FROM Recording_Sessions
+JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.artist_ID
+
+--
+-- Add row to Recording_Sessions
+--
+
+INSERT INTO Recording_Sessions (room_ID, duration):
+VALUES (:room_ID, :duration)
+
+
+--
+-- SQL for Recording_Sessions_has_Artists table
+--
+
+-- Display Recording_Sessions_has_Artists
+
+SELECT recording_sessions_has_artists_ID, session_ID, artist_ID
+FROM Recording_Sessions_has_Artists
+
+-- Add row to Recording_Sessions_has_Artists
+
+INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
+VALUEs (:session_ID, :artist_ID)
