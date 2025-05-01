@@ -1,0 +1,16 @@
+h1, h2 { margin-left: 16px;font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;}
+table {border-collapse: collapse;margin-left: 32px;}
+th, td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+}
+th {background-color: #f2f2f2;}
+tr:nth-child(even) {background-color: #f9f9f9;}
+.cuForm { margin-left: 32px;}
+input, select { margin-bottom: 4px;margin-right: 12px;}
+nav {background-color: rgb(185, 205, 206);padding: 20px; border-radius: 18px; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    text-align: center;}
+a {margin-left: 16px;}
+.homepageDescription {margin-left: 32px;}
