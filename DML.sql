@@ -9,7 +9,11 @@
 -- URLs: https://www.w3schools.com/sql/sql_union.asp
 -- https://canvas.oregonstate.edu/courses/1999601/pages/exploration-database-application-design?module_item_id=25352946
 
+-- using : to denote the variables
+
+--
 -- SQL for Artists table
+--
 -- display all artists and their information for the Artists page
 
 SELECT Artists.artist_ID, manager_ID, name, phone_number, email
@@ -48,7 +52,9 @@ DELETE FROM Artists
 WHERE artist_ID = :artist_ID_selected_from_artists_page;
 
 
+--
 -- SQL for Managers table
+--
 -- display all managers and their information for the Managers page
 
 SELECT Managers.manager_ID, name, phone_number, email
@@ -71,7 +77,9 @@ DELETE FROM Managers
 WHERE manager_ID = :manager_ID_selected_from_Managers_page;
 
 
+--
 -- SQL for Rooms table
+--
 -- display all rooms and their information for the Rooms page
 
 SELECT Rooms.room_ID, square_footage, floor
