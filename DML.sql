@@ -104,13 +104,13 @@ JOIN Recording_Sessions ON Invoice.session_ID = Recording_Sessions.session_ID;
 -- Add row to Invoices
 
 INSERT INTO Invoices (session_ID, session_cost):
-VALUES (:session_ID, :session_cost)
+VALUES (:session_ID, :session_cost);
 
 -- Change invoice to paid
 
 UPDATE Invoices
 SET invoice_paid = 1
-WHERE session_ID = :session_ID
+WHERE session_ID = :session_ID;
 
 
 --
@@ -121,14 +121,14 @@ WHERE session_ID = :session_ID
 
 SELECT Recording_Sessions.session_ID, Recording_Sessions_has_Artists.artist_ID, Recording_Sessions.room_ID, Recording_Sessions.duration
 FROM Recording_Sessions
-JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.artist_ID
+JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.artist_ID;
 
 --
 -- Add row to Recording_Sessions
 --
 
 INSERT INTO Recording_Sessions (room_ID, duration):
-VALUES (:room_ID, :duration)
+VALUES (:room_ID, :duration);
 
 
 --
@@ -138,9 +138,20 @@ VALUES (:room_ID, :duration)
 -- Display Recording_Sessions_has_Artists
 
 SELECT recording_sessions_has_artists_ID, session_ID, artist_ID
-FROM Recording_Sessions_has_Artists
+FROM Recording_Sessions_has_Artists;
 
 -- Add row to Recording_Sessions_has_Artists
 
 INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
-VALUEs (:session_ID, :artist_ID)
+VALUES (:session_ID, :artist_ID);
+
+-- Update row in Recording_Sessions_has_Artists
+
+UPDATE Recording_Sessions_has_Artists
+SET session_ID = :session_ID, artist_ID = :artist_ID
+WHERE recording_sessions_has_artists_ID = :recording_sessions_has_artists_ID
+
+-- Delete row from Recording_Sessions_has_Artists
+
+DELETE FROM Recording_Sessions_has_Artists
+WHERE recording_sessions_has_artists_ID = :recording_sessions_has_artists_ID;
