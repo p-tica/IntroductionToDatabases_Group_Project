@@ -89,19 +89,19 @@ VALUES ('Irving Azoff', '555-123-4567', 'azoffi@bandmanage.com'),
 -- Query to insert data into Artists table
 
 INSERT INTO Artists (manager_ID, name, phone_number, email)
-VALUES (1, 'Eagles', '555-555-5555', 'eagles@abc.com'),
-(1, 'U2', '555-554-5555', 'u2@abc.com'),
-(2, 'MGMT', '213-813-4444', 'mgmt@abc.com'),
-(3, 'Halsey', '310-111-2222', 'halsey@abc.com'),
+VALUES ((SELECT manager_ID FROM Managers WHERE name = 'Irving Azoff'), 'Eagles', '555-555-5555', 'eagles@abc.com'),
+((SELECT manager_ID FROM Managers WHERE name = 'Irving Azoff'), 'U2', '555-554-5555', 'u2@abc.com'),
+((SELECT manager_ID FROM Managers WHERE name = 'Bob Smith'), 'MGMT', '213-813-4444', 'mgmt@abc.com'),
+((SELECT manager_ID FROM Managers WHERE name = 'Julie Stone'), 'Halsey', '310-111-2222', 'halsey@abc.com'),
 (NULL, 'Kid Cudi', '100-200-3333', 'kidcudi@abc.com');
 
 -- Query to insert data into Recording_Sessions_has_Artists table
 
 INSERT INTO Recording_Sessions_has_Artists (session_ID, artist_ID)
-VALUES(1, 1),
-(2, 3),
-(3, 3),
-(4, 4);
+VALUES(1, (SELECT artist_ID FROM Artists WHERE name = 'Eagles')),
+(2, (SELECT artist_ID FROM Artists WHERE name = 'MGMT')),
+(3, (SELECT artist_ID FROM Artists WHERE name = 'MGMT')),
+(4, (SELECT artist_ID FROM Artists WHERE name = 'Halsey'));
 
 -- Query to insert data into Recording_Sessions table
 
