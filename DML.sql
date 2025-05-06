@@ -16,8 +16,10 @@
 --
 -- display all artists and their information for the Artists page
 
-SELECT Artists.artist_ID, manager_ID, name, phone_number, email
-FROM Artists;
+SELECT Artists.artist_id, Managers.name AS 'Manager', Artists.name AS 'Name',
+Artists.phone_number AS 'Phone Number', Artists.email AS 'Email' 
+FROM Artists
+LEFT JOIN Managers ON Artists.manager_ID = Managers.manager_ID;
 
 -- get all manager IDs and Names to populate the manager_ID dropdown
 
@@ -57,7 +59,7 @@ WHERE artist_ID = :artist_ID_selected_from_artists_page;
 --
 -- display all managers and their information for the Managers page
 
-SELECT Managers.manager_ID, name, phone_number, email
+SELECT Managers.manager_ID, name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
 FROM Managers;
 
 -- ADD Manager
@@ -82,7 +84,7 @@ WHERE manager_ID = :manager_ID_selected_from_Managers_page;
 --
 -- display all rooms and their information for the Rooms page
 
-SELECT Rooms.room_ID, square_footage, floor
+SELECT Rooms.room_ID, square_footage AS 'Square Footage', floor AS 'Floor'
 FROM Rooms;
 
 -- ADD Room
