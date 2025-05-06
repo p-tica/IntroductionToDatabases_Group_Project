@@ -1,4 +1,4 @@
-const TableRowRecordingSessions = () => {
+const TableRowRecordingSessions = ({ rowObject }) => {
 
     return (
         <tr>

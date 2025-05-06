@@ -1,4 +1,4 @@
-const TableRowRecordingSessionshasArtists = () => {
+const TableRowRecordingSessionshasArtists = ({ rowObject }) => {
     return (
         <tr>
             {Object.values(rowObject).map((value, index) => (

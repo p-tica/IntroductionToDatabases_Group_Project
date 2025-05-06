@@ -42,7 +42,6 @@ function Invoices({ backendURL }){
                         {invoices.length > 0 && Object.keys(invoices[0]).map((header, index) => (
                             <th key={index}>{header}</th>
                         ))}
-                        <th></th>
                     </tr>
                 </thead>
 

@@ -52,7 +52,7 @@ function Recording_Sessions({ backendURL }) {
                     </tbody>
                 </table>
                 
-                <AddRecordingSessionsForm recording_sessions={recording_sessions} rooms={rooms} backendURL={backendURL} refreshRecordingSessions={getData} />              
+                <AddRecordingSessionsForm rooms={rooms} backendURL={backendURL} refreshRecordingSessions={getData} />              
             </>
     );
 

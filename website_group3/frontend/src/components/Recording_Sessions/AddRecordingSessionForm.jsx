@@ -1,4 +1,4 @@
-const AddRecordingSessionForm = (recording_sessions, rooms) => {
+const AddRecordingSessionForm = (rooms) => {
 
     return (
         <>

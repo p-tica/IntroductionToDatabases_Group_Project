@@ -3,7 +3,7 @@ import TableRowRecordingSessionshasArtists from '../components/Recording_Session
 import AddRecordingSessionshasArtistsForm from '../components/Recording_Sessions_has_Artists/AddRecordingSessionshasArtistsForm';
 import UpdateRecordingSessionshasArtistsForm from '../components/Recording_Sessions_has_Artists/UpdateRecordingSessionshasArtistsForm';
 
-function Recording_Sessions_has_Artists() {
+function Recording_Sessions_has_Artists({ backendURL }) {
 
     const [recording_sessions_has_artists, setRecordingSessionshasArtists] = useState([]);
     const [recording_sessions, setRecordingSessions] = useState([]);

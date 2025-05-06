@@ -31,7 +31,6 @@ function App() {
                 <Route path="/invoices" element={<Invoices backendURL={backendURL} />} />
                 <Route path="/recording_sessions" element={<Recording_Sessions backendURL={backendURL} />} />
                 <Route path="/recording_sessions_has_artists" element={<Recording_Sessions_has_Artists backendURL={backendURL} />} />
-                <Route path="/resetbutton" element={<Reset backendURL={backendURL} />} />
             </Routes>
         </>
     );

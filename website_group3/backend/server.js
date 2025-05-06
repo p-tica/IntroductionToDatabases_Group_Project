@@ -79,9 +79,10 @@ app.get('/invoices', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT Invoices.invoice_ID, Recording_Sessions.artist_id, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+        const query1 = `SELECT Invoices.invoice_ID, Recording_Sessions_has_Artists.artist_id, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
             FROM Invoices
-            JOIN Recording_Sessions ON Invoice.session_ID = Recording_Sessions.session_ID;`;
+            JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
+            JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID;`;
         const query2 = 'SELECT * FROM Recording_Sessions;';
         const [invoices] = await db.query(query1);
         const [recording_sessions] = await db.query(query2);

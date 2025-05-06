@@ -12,7 +12,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
             >
                 <option value="">Select an Invoice</option>
                 {invoices.map((invoice) => (
-                    <option value={invoice.invoice_id} key={invoice.invoice_id}></option>
+                    <option value={invoice.id} key={invoice.id}>{invoice.cost}</option>
                 ))}
             </select>
 
