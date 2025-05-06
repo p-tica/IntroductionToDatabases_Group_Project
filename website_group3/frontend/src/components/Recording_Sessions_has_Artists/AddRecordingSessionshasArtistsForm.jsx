@@ -2,7 +2,7 @@ const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists} ) => 
 
     return (
         <>
-        <h2>Add an Artist</h2>
+        <h2>Pair a Recording Session and Artist</h2>
 
         <form className='cuForm'>
 
@@ -12,9 +12,8 @@ const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists} ) => 
                 id="add_session_id"
             >
                 <option value="">Select a Session</option>
-                <option value="NULL">&lt; None &gt;</option>
                 {recording_sessions.map((recording_sessions, index) => (
-                    <option value={recording_sessions.id} key={index}></option>
+                    <option value={recording_sessions.id} key={index}>{recording_sessions.session_ID}</option>
                 ))}
             </select>
 
@@ -28,7 +27,7 @@ const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists} ) => 
                     <option value={artists.id} key={index}>{artists.name}</option>
                 ))}
             </select>
-
+            <input type="submit" />
         </form>
         </>
     );

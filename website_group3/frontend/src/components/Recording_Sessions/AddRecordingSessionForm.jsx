@@ -1,8 +1,8 @@
 const AddRecordingSessionForm = ({ rooms }) => {
-
+console.log(rooms)
     return (
         <>
-        <h2>Add an Artist</h2>
+        <h2>Add a Recording Session</h2>
 
         <form className='cuForm'>
 
@@ -13,7 +13,7 @@ const AddRecordingSessionForm = ({ rooms }) => {
             >
                 <option value="">Select a Room</option>
                 {rooms.map((rooms, index) => (
-                    <option value={rooms.room_id} key={index}></option>
+                    <option value={rooms.room_id} key={index}>{rooms.room_ID}</option>
                 ))}
             </select>
 
@@ -22,6 +22,7 @@ const AddRecordingSessionForm = ({ rooms }) => {
                 type="number"
                 name="add_duration"
                 id="add_duration"
+                step='0.25'
             />
 
             <input type="submit" />

@@ -4,19 +4,18 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
 
     return (
         <>
-        <h2>Add an Artist</h2>
+        <h2>Update a Session/Artist pairing</h2>
 
         <form className='cuForm'>
 
-            <label htmlFor="update_recording_sessions_has_artists_id">Session: </label>
+            <label htmlFor="update_recording_sessions_has_artists_id">Pairing: </label>
             <select
                 name="update_recording_sessions_has_artists_id"
                 id="update_recording_sessions_has_artists_id"
             >
                 <option value="">Select a Session/Artist pairing</option>
-                <option value="NULL">&lt; None &gt;</option>
                 {recording_sessions_has_artists.map((recording_sessions_has_artists, index) => (
-                    <option value={recording_sessions_has_artists.id} key={recording_sessions_has_artists.id}></option>
+                    <option value={recording_sessions_has_artists.id} key={index}>{recording_sessions_has_artists.recording_sessions_has_artists_ID}</option>
                 ))}
             </select>
             
@@ -26,9 +25,8 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
                 id="update_session_id"
             >
                 <option value="">Select a Session</option>
-                <option value="NULL">&lt; None &gt;</option>
                 {recording_sessions.map((recording_sessions, index) => (
-                    <option value={recording_sessions.id} key={recording_sessions.id}></option>
+                    <option value={recording_sessions.id} key={index}>{recording_sessions.session_ID}</option>
                 ))}
             </select>
 
@@ -38,12 +36,12 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
                 id="update_artist_id"
             >
                 <option value="">Select an Artist</option>
-                <option value="NULL">&lt; None &gt;</option>
                 {artists.map((artists, index) => (
-                    <option value={artists.name} key={artists.id}></option>
+                    <option value={artists.id} key={index}>{artists.name}</option>
                 ))}
             </select>
 
+            <input type="submit" />
         </form>
         </>
     );

@@ -13,7 +13,7 @@ const AddInvoiceForm = ({ recording_sessions }) => {
             >
                 <option value="">Select a Recording Session</option>
                 {recording_sessions.map((recording_sessions, index) => (
-                    <option value={recording_sessions.id} key={index}>{recording_sessions.id}</option>
+                    <option value={recording_sessions.id} key={index}>{recording_sessions.session_ID}</option>
                 ))}
             </select>
 

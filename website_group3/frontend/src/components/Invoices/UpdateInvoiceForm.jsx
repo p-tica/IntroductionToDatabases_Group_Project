@@ -11,8 +11,8 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
                 id="update_invoice_id"
             >
                 <option value="">Select an Invoice</option>
-                {invoices.map((invoice) => (
-                    <option value={invoice.id} key={invoice.id}>{invoice.cost}</option>
+                {invoices.map((invoice, index) => (
+                    <option value={invoice.id} key={index}>{invoice.invoice_ID}</option>
                 ))}
             </select>
 
@@ -22,8 +22,8 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
                 id="update_recording_session_id"
             >
                 <option value="">Select a Recording Session</option>
-                {recording_sessions.map((recording_session) => (
-                    <option value={recording_session.session_id} key={recording_session.session_id}></option>
+                {recording_sessions.map((recording_session, index) => (
+                    <option value={recording_session.session_id} key={index}>{recording_session.session_ID}</option>
                 ))}
             </select>
 
