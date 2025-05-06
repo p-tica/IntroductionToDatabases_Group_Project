@@ -3,7 +3,7 @@
 -- schlabad@oregonstate.edu
 -- CS 340 Section 400
 
--- Citation for this sl file:
+-- Citation for this sql file:
 -- Date: 05/08/2025
 -- Adapted from Exploration - Database Application Design
 -- Original author: Presumed to be Dr. Michael Curry
@@ -14,6 +14,7 @@
 --
 -- SQL for Artists table
 --
+
 -- display all artists and their information for the Artists page
 
 SELECT Artists.artist_id, Managers.name AS 'Manager', Artists.name AS 'Name',
@@ -41,6 +42,7 @@ WHERE artist_ID = :artist_ID_selected_from_artists_page;
 --
 -- SQL for Managers table
 --
+
 -- display all managers and their information for the Managers page
 
 SELECT Managers.manager_ID, name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
@@ -66,6 +68,7 @@ WHERE manager_ID = :manager_ID_selected_from_Managers_page;
 --
 -- SQL for Rooms table
 --
+
 -- display all rooms and their information for the Rooms page
 
 SELECT Rooms.room_ID, square_footage AS 'Square Footage', floor AS 'Floor'
