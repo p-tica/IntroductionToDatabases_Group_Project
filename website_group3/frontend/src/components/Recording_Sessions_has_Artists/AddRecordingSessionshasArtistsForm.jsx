@@ -1,4 +1,4 @@
-const AddRecordingSessionshasArtistsForm = (recording_sessions, artists) => {
+const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists} ) => {
 
     return (
         <>
@@ -24,7 +24,6 @@ const AddRecordingSessionshasArtistsForm = (recording_sessions, artists) => {
                 id="add_artist_id"
             >
                 <option value="">Select an Artist</option>
-                <option value="NULL">&lt; None &gt;</option>
                 {artists.map((artists, index) => (
                     <option value={artists.id} key={index}>{artists.name}</option>
                 ))}

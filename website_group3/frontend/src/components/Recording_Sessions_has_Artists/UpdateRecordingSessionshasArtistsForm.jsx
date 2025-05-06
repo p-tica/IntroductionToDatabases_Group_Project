@@ -1,6 +1,6 @@
 import Recording_Sessions_has_Artists from "../../pages/Recording_Sessions_has_Artists";
 
-const UpdateRecordingSessionshasArtistsForm = (recording_session_has_artists, recording_sessions, artists) => {
+const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists, recording_sessions, artists }) => {
 
     return (
         <>
@@ -15,8 +15,8 @@ const UpdateRecordingSessionshasArtistsForm = (recording_session_has_artists, re
             >
                 <option value="">Select a Session/Artist pairing</option>
                 <option value="NULL">&lt; None &gt;</option>
-                {recording_session_has_artists.map((recording_session_has_artists, index) => (
-                    <option value={recording_session_has_artists.id} key={recording_session_has_artists.id}></option>
+                {recording_sessions_has_artists.map((recording_sessions_has_artists, index) => (
+                    <option value={recording_sessions_has_artists.id} key={recording_sessions_has_artists.id}></option>
                 ))}
             </select>
             
