@@ -40,7 +40,6 @@ function Recording_Sessions({ backendURL }) {
                             {recording_sessions.length > 0 && Object.keys(recording_sessions[0]).map((header, index) => (
                                 <th key={index}>{header}</th>
                             ))}
-                            <th></th>
                         </tr>
                     </thead>
     
