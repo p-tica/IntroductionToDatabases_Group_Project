@@ -6,6 +6,10 @@ import Home from './pages/Home';
 import Artists from './pages/Artists';
 import Managers from './pages/Managers';
 import Rooms from './pages/Rooms';
+import Invoices from './pages/Invoices';
+import Recording_Sessions from './pages/Recording_Sessions';
+import Recording_Sessions_has_Artists from './pages/Recording_Sessions_has_Artists';
+import Reset from './pages/Reset';
 
 // Components
 import Navigation from './components/Navigation';
@@ -24,6 +28,10 @@ function App() {
                 <Route path="/artists" element={<Artists backendURL={backendURL} />} />
                 <Route path="/managers" element={<Managers backendURL={backendURL} />} />
                 <Route path="/rooms" element={<Rooms backendURL={backendURL} />} />
+                <Route path="/invoices" element={<Invoices backendURL={backendURL} />} />
+                <Route path="/recording_sessions" element={<Recording_Sessions backendURL={backendURL} />} />
+                <Route path="/recording_sessions_has_artists" element={<Recording_Sessions_has_Artists backendURL={backendURL} />} />
+                <Route path="/resetbutton" element={<Reset backendURL={backendURL} />} />
             </Routes>
         </>
     );

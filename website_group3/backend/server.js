@@ -75,6 +75,70 @@ app.get('/rooms', async (req, res) => {
     
 });
 
+app.get('/invoices', async (req, res) => {
+    try {
+        // Create and execute our queries
+        // In query1, display the rooms table
+        const query1 = `SELECT Invoices.invoice_ID, Recording_Sessions.artist_id, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+            FROM Invoices
+            JOIN Recording_Sessions ON Invoice.session_ID = Recording_Sessions.session_ID;`;
+        const query2 = 'SELECT * FROM Recording_Sessions;';
+        const [invoices] = await db.query(query1);
+        const [recording_sessions] = await db.query(query2);
+
+        res.status(200).json({ invoices, recording_sessions });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+    
+});
+
+app.get('/recording_sessions', async (req, res) => {
+    try {
+        // Create and execute our queries
+        // In query1, display the rooms table
+        const query1 = `SELECT Recording_Sessions.session_ID, Recording_Sessions_has_Artists.artist_ID, Recording_Sessions.room_ID, Recording_Sessions.duration AS 'Duration'
+            FROM Recording_Sessions
+            JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.artist_ID;`;
+        const query2 = 'SELECT * FROM Rooms;';
+        const [recording_sessions] = await db.query(query1);
+        const [rooms] = await db.query(query2);
+
+        res.status(200).json({ recording_sessions, rooms });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+    
+});
+
+app.get('/recording_sessions_has_artists', async (req, res) => {
+    try {
+        // Create and execute our queries
+        // In query1, display the rooms table
+        const query1 = `SELECT recording_sessions_has_artists_ID, session_ID, artist_ID
+            FROM Recording_Sessions_has_Artists;`;
+        const query2 = 'SELECT * FROM Recording_Sessions;';
+        const query3 = 'SELECT * FROM Artists;';
+        const [recording_sessions_has_artists] = await db.query(query1);
+        const [recording_sessions] = await db.query(query2);
+        const [artists] = await db.query(query3);
+
+        res.status(200).json({ recording_sessions_has_artists, recording_sessions, artists });  // Send the results to the frontend
+
+    } catch (error) {
+        console.error("Error executing queries:", error);
+        // Send a generic error message to the browser
+        res.status(500).send("An error occurred while executing the database queries.");
+    }
+    
+});
+
 // ########################################
 // ########## LISTENER
 
