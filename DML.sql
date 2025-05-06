@@ -3,11 +3,11 @@
 -- schlabad@oregonstate.edu
 -- CS 340 Section 400
 
--- Citation:
+-- Citation for this sl file:
 -- Date: 05/08/2025
--- Adapted from W3Schools and Exploration - Database Application Design
--- URLs: https://www.w3schools.com/sql/sql_union.asp
--- https://canvas.oregonstate.edu/courses/1999601/pages/exploration-database-application-design?module_item_id=25352946
+-- Adapted from Exploration - Database Application Design
+-- Original author: Presumed to be Dr. Michael Curry
+-- URLs: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-database-application-design?module_item_id=25352946
 
 -- using : to denote the variables
 
@@ -21,26 +21,10 @@ Artists.phone_number AS 'Phone Number', Artists.email AS 'Email'
 FROM Artists
 LEFT JOIN Managers ON Artists.manager_ID = Managers.manager_ID;
 
--- get all manager IDs and Names to populate the manager_ID dropdown
-
-SELECT NULL AS manager_ID, 'None' AS name
-UNION ALL
-SELECT manager_ID, name
-FROM Managers
-ORDER BY manager_ID;
-
 -- ADD Artist
 
 INSERT INTO Artists (manager_ID, name, phone_number, email)
 VALUES (:manager_ID_from_dropdown_Input, :name, :phone_number, :email);
-
--- get all manager IDs and Names to populate the manager_ID dropdown
-
-SELECT NULL AS manager_ID, 'None' AS name
-UNION ALL
-SELECT manager_ID, name
-FROM Managers
-ORDER BY manager_ID;
 
 -- UPDATE Artist
 
@@ -155,7 +139,7 @@ VALUES (:session_ID, :artist_ID);
 
 UPDATE Recording_Sessions_has_Artists
 SET session_ID = :session_ID, artist_ID = :artist_ID
-WHERE recording_sessions_has_artists_ID = :recording_sessions_has_artists_ID
+WHERE recording_sessions_has_artists_ID = :recording_sessions_has_artists_ID;
 
 -- Delete row from Recording_Sessions_has_Artists
 

@@ -15,7 +15,7 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
             >
                 <option value="">Select a Session/Artist pairing</option>
                 {recording_sessions_has_artists.map((recording_sessions_has_artists, index) => (
-                    <option value={recording_sessions_has_artists.id} key={index}>{recording_sessions_has_artists.recording_sessions_has_artists_ID}</option>
+                    <option value={recording_sessions_has_artists.id} key={index}>{recording_sessions_has_artists.Pairing}</option>
                 ))}
             </select>
             

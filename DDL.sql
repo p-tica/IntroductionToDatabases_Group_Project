@@ -4,11 +4,9 @@
 -- CS 340 Section 400
 --
 -- Citation for this sql file:
--- Date: 05/01/2025
+-- Date: 05/08/2025
 -- Adapted from instructions given in module 5,
 -- "Project Step 2 Draft: Normalized Schema + DDL with Sample Data (Group, on Ed Discussions)"
--- The code for this sql file was based on instructions
--- provided in the aforementioned activity.
 -- Original author: Presumed to be Dr. Michael Curry
 -- URL: https://oregonstate.instructure.com/courses/1999601/assignments/10006385?module_item_id=25352941
 
