@@ -43,6 +43,7 @@ function Recording_Sessions_has_Artists({ backendURL }) {
                                 {recording_sessions_has_artists.length > 0 && Object.keys(recording_sessions_has_artists[0]).map((header, index) => (
                                     <th key={index}>{header}</th>
                                 ))}
+                                <th></th>
                             </tr>
                         </thead>
         
