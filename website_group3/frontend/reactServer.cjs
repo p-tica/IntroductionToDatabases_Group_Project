@@ -13,7 +13,10 @@ const PORT = 60001;
 
 // Handles any requests that don't match the ones above to return the React app
 // A request to '/nonExist' will redirect to the index.html where react router takes over at '/'
-app.get('*', (req, res) => {
+// Addition of splat is due to changes in path route matching from Express 4 to 5. More details:
+// 1. https://github.com/expressjs/express/issues/5948
+// 2. https://expressjs.com/en/guide/migrating-5.html#path-syntax
+app.get('/*splat', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'dist', 'index.html'));
 });
 
