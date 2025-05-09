@@ -142,7 +142,7 @@ JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
 
 INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
 VALUES (SELECT session_ID FROM Recording_Sessions WHERE session_ID = :session_ID,
-        SELECT artist_ID FROM Artists WHERE artist_ID =:artist_ID);
+        SELECT artist_ID FROM Artists WHERE artist_ID = :artist_ID);
 
 -- Update row in Recording_Sessions_has_Artists
 
