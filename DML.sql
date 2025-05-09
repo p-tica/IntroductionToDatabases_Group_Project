@@ -24,7 +24,10 @@ LEFT JOIN Managers ON Artists.manager_ID = Managers.manager_ID;
 -- ADD Artist
 
 INSERT INTO Artists (manager_ID, name, phone_number, email)
-VALUES (:manager_ID_from_dropdown_Input, :name, :phone_number, :email);
+VALUES (SELECT manager_ID FROM Managers WHERE manager_ID = :manager_ID_from_dropdown_Input,
+        :name, 
+        :phone_number, 
+        :email);
 
 -- UPDATE Artist
 
@@ -92,7 +95,8 @@ JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
 -- Add row to Invoices
 
 INSERT INTO Invoices (session_ID, session_cost):
-VALUES (:session_ID, :session_cost);
+VALUES (SELECT session_ID FROM Recording_Sessions WHERE session_ID = :session_ID,
+        :session_cost);
 
 -- Change invoice to paid
 
@@ -117,7 +121,8 @@ JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
 --
 
 INSERT INTO Recording_Sessions (room_ID, duration):
-VALUES (:room_ID, :duration);
+VALUES (SELECT room_ID FROM Rooms WHERE room_ID = :room_ID, 
+        :duration);
 
 
 --
@@ -133,7 +138,8 @@ JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
 -- Add row to Recording_Sessions_has_Artists
 
 INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
-VALUES (:session_ID, :artist_ID);
+VALUES (SELECT session_ID FROM Recording_Sessions WHERE session_ID = :session_ID,
+        SELECT artist_ID FROM Artists WHERE artist_ID =:artist_ID);
 
 -- Update row in Recording_Sessions_has_Artists
 
