@@ -1,3 +1,9 @@
+-- Citation for starter code 
+-- Date: 05/22/2025
+-- Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
+-- URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+
+
 -- #############################
 -- CREATE bsg_people
 -- #############################
