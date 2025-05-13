@@ -5,29 +5,26 @@
 
 
 -- #############################
--- CREATE bsg_people
+-- CREATE an Artist
 -- #############################
-DROP PROCEDURE IF EXISTS sp_CreatePerson;
+DROP PROCEDURE IF EXISTS sp_CreateArtist;
 
 DELIMITER //
-CREATE PROCEDURE sp_CreatePerson(
-    IN p_fname VARCHAR(255), 
-    IN p_lname VARCHAR(255), 
-    IN p_homeworld INT, 
-    IN p_age INT,
-    OUT p_id INT)
+CREATE PROCEDURE sp_CreateArtist(
+    IN manager_ID INT, 
+    IN name VARCHAR(145), 
+    IN phone_number VARCHAR(15), 
+    IN email VARCHAR(145),
+    OUT artist_ID INT)
 BEGIN
-    INSERT INTO bsg_people (fname, lname, homeworld, age) 
-    VALUES (p_fname, p_lname, p_homeworld, p_age);
+    INSERT INTO Artists (manager_ID, name, phone_number, email) 
+    VALUES (manager_ID, name, phone_number, email);
 
     -- Store the ID of the last inserted row
-    SELECT LAST_INSERT_ID() into p_id;
-    -- Display the ID of the last inserted person.
-    SELECT LAST_INSERT_ID() AS 'new_id';
+    SELECT LAST_INSERT_ID() into artist_ID;
+    -- Display the ID of the last inserted artist
+    SELECT LAST_INSERT_ID() AS 'new_artist_ID';
 
-    -- Example of how to get the ID of the newly created person:
-        -- CALL sp_CreatePerson('Theresa', 'Evans', 2, 48, @new_id);
-        -- SELECT @new_id AS 'New Person ID';
 END //
 DELIMITER ;
 

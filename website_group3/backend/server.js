@@ -154,7 +154,41 @@ app.get('/recording_sessions_has_artists', async (req, res) => {
 });
 
 // CREATE ROUTES
+app.post('/artists/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
 
+        // Cleanse data - If the manager_ID isn't a number, make it NULL.
+        if (isNaN(parseInt(data.create_artist_manager_ID)))
+            data.create_artist_manager_ID = null;
+
+        // Create and execute queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateArtist(?, ?, ?, ?, @new_artist_ID);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_artist_manager_ID,
+            data.create_artist_name,
+            data.create_artist_phone_number,
+            data.create_artist_email,
+        ]);
+
+        console.log(`CREATE artist. ID: ${rows.new_artist_ID} ` +
+            `Name: ${data.create_artist_name}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Artist created successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 
 // UPDATE ROUTES
