@@ -1,3 +1,11 @@
+// Citation for starter code 
+// Date: 05/22/2025
+// Code adapted from the bsg files from Exploration - Web Application Technology
+// Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
+// URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
+// URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+
+
 // ########################################
 // ########## SETUP
 
@@ -39,7 +47,8 @@ app.get('/artists', async (req, res) => {
         res.status(500).send("An error occurred while executing the database queries.");
     }
     
-})
+});
+
 app.get('/managers', async (req, res) => {
     try {
         // Create and execute our queries
@@ -56,7 +65,8 @@ app.get('/managers', async (req, res) => {
         res.status(500).send("An error occurred while executing the database queries.");
     }
     
-})
+});
+
 app.get('/rooms', async (req, res) => {
     try {
         // Create and execute our queries
@@ -142,6 +152,19 @@ app.get('/recording_sessions_has_artists', async (req, res) => {
     }
     
 });
+
+// CREATE ROUTES
+
+
+
+// UPDATE ROUTES
+
+
+
+// DELETE ROUTES
+
+
+
 
 // ########################################
 // ########## LISTENER
