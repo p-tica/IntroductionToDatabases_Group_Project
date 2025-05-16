@@ -5,7 +5,6 @@
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 
-
 // ########################################
 // ########## SETUP
 
@@ -190,13 +189,157 @@ app.post('/artists/create', async function (req, res) {
     }
 });
 
+app.post('/managers/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateManager(?, ?, ?, @new_manager_ID);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_manager_name,
+            data.create_manager_phone_number,
+            data.create_manager_email,
+        ]);
+
+        console.log(`CREATE manager. ID: ${rows.new_manager_ID} ` +
+            `Name: ${data.create_manager_name}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Manager created successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/rooms/create', async function (req, res) {
+    try {
+        let data = req.body;
+
+        // Execute the stored procedure and capture the output
+        const [[rows]] = await db.query(`CALL sp_CreateRoom(?, ?, @room_ID);`, [
+            data.create_room_square_footage,
+            data.create_room_floor
+        ]);
+
+        // Fetch the room_ID directly after calling the stored procedure
+        const [[{ room_ID }]] = await db.query(`SELECT @room_ID;`);
+
+        console.log(`CREATE room. ID: ${room_ID}, 
+            Square Footage: ${data.create_room_square_footage}, Floor: ${data.create_room_floor}`
+        );
+
+        res.status(200).json({ message: 'Room created successfully', room_ID });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        res.status(500).send('An error occurred while executing the database queries.');
+    }
+});
+
 
 // UPDATE ROUTES
+app.post('/artists/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
 
+        // Cleanse data - If manager_ID isn't a number, make it NULL.
+        if (isNaN(parseInt(data.update_manager_ID)))
+            data.update_manager_ID = null;
+        
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateArtist(?, ?, ?, ?, ?);';
+        const query2 = 'SELECT name, phone_number, email FROM Artists WHERE artist_ID = ?;';
+        await db.query(query1, [
+            data.update_artist_ID,
+            data.update_manager_ID,
+            data.update_name,
+            data.update_phone_number,
+            data.update_email,
+        ]);
+        const [[rows]] = await db.query(query2, [data.update_artist_ID]);
 
+        console.log(`UPDATE Artist. ID: ${data.update_artist_ID} ` +
+            `Name: ${rows.name}, Phone: ${rows.phone_number}, Email: ${rows.email}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Artist updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/managers/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+        
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateManager(?, ?, ?, ?);';
+        const query2 = 'SELECT name, phone_number, email FROM Managers WHERE manager_ID = ?;';
+        await db.query(query1, [
+            data.update_manager_ID,
+            data.update_manager_name,
+            data.update_manager_phone_number,
+            data.update_manager_email,
+        ]);
+        const [[rows]] = await db.query(query2, [data.update_manager_ID]);
+
+        console.log(`UPDATE Manager. ID: ${data.update_manager_ID} ` +
+            `Name: ${rows.name}, Phone: ${rows.phone_number}, Email: ${rows.email}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Manager updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 // DELETE ROUTES
+app.post('/artists/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
 
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteArtist(?);`;
+        await db.query(query1, [data.delete_artist_ID]);
+
+        console.log(`DELETE Artist. ID: ${data.delete_artist_ID} ` +
+            `Name: ${data.delete_artist_name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/artists');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 
 
