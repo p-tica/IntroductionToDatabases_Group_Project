@@ -33,7 +33,7 @@ CREATE OR REPLACE TABLE Artists (
     phone_number varchar(15) NOT NULL,
     email varchar(145) NOT NULL,
     PRIMARY KEY (artist_ID),
-    FOREIGN KEY (manager_ID) REFERENCES Managers(manager_ID) ON DELETE RESTRICT
+    FOREIGN KEY (manager_ID) REFERENCES Managers(manager_ID) ON DELETE SET NULL
 );
 
 -- Query to create Recording_Sessions table
