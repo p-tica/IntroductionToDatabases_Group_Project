@@ -168,53 +168,124 @@ BEGIN
 END //
 DELIMITER ;
 
+
+
+
+
 -- #############################
--- CREATE bsg_people
+-- CREATE an Invoice
 -- #############################
-DROP PROCEDURE IF EXISTS sp_CreatePerson;
+DROP PROCEDURE IF EXISTS sp_CreateInvoice;
 
 DELIMITER //
-CREATE PROCEDURE sp_CreatePerson(
-    IN p_fname VARCHAR(255), 
-    IN p_lname VARCHAR(255), 
-    IN p_homeworld INT, 
-    IN p_age INT,
-    OUT p_id INT)
+CREATE PROCEDURE sp_CreateInvoice(
+    IN p_session_ID INT,
+    IN session_cost INT,
+    IN invoice_paid TINYINT,
+    OUT invoice_ID INT)
 BEGIN
-    INSERT INTO bsg_people (fname, lname, homeworld, age) 
-    VALUES (p_fname, p_lname, p_homeworld, p_age);
+INSERT INTO Invoices (session_ID, session_cost, invoice_paid)
+VALUES ((SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID),
+        session_cost, invoice_paid);
 
     -- Store the ID of the last inserted row
-    SELECT LAST_INSERT_ID() into p_id;
-    -- Display the ID of the last inserted person.
-    SELECT LAST_INSERT_ID() AS 'new_id';
+    SELECT LAST_INSERT_ID() into invoice_ID;
 
-    -- Example of how to get the ID of the newly created person:
-        -- CALL sp_CreatePerson('Theresa', 'Evans', 2, 48, @new_id);
-        -- SELECT @new_id AS 'New Person ID';
 END //
 DELIMITER ;
 
+
 -- #############################
--- UPDATE bsg_people
+-- UPDATE an Invoice
 -- #############################
-DROP PROCEDURE IF EXISTS sp_UpdatePerson;
+DROP PROCEDURE IF EXISTS sp_UpdateInvoice;
 
 DELIMITER //
-CREATE PROCEDURE sp_UpdatePerson(IN p_id INT, IN p_homeworld INT, IN p_age INT)
+CREATE PROCEDURE sp_UpdateInvoice(
+    IN p_session_ID INT,
+    OUT paid_confirmation VARCHAR(10))
+
 
 BEGIN
-    UPDATE bsg_people SET homeworld = p_homeworld, age = p_age WHERE id = p_id; 
+UPDATE Invoices
+SET invoice_paid = 1
+WHERE session_ID = p_session_ID;
+
+    SET paid_confirmation = 'Paid';
+
+END //
+DELIMITER ;
+
+
+-- #############################
+-- CREATE a Recording Session
+-- #############################
+DROP PROCEDURE IF EXISTS sp_CreateRecordingSession;
+
+DELIMITER //
+CREATE PROCEDURE sp_CreateRecordingSession(
+    IN p_room_ID INT,
+    IN duration INT,
+    OUT session_ID INT)
+BEGIN
+    INSERT INTO Recording_Sessions (room_ID, duration) 
+    VALUES ((SELECT room_ID FROM Rooms WHERE room_ID = p_room_ID), duration);
+
+    -- Store the ID of the last inserted row
+    SELECT LAST_INSERT_ID() into session_ID;
+
 END //
 DELIMITER ;
 
 -- #############################
--- DELETE bsg_people
+-- CREATE a Recording Sessions and Artists pairing
 -- #############################
-DROP PROCEDURE IF EXISTS sp_DeletePerson;
+DROP PROCEDURE IF EXISTS sp_CreateRecordingSessionAndArtistPairing;
 
 DELIMITER //
-CREATE PROCEDURE sp_DeletePerson(IN p_id INT)
+CREATE PROCEDURE sp_CreateRecordingSessionAndArtistPairing(
+    IN p_session_ID INT,
+    IN p_artist_ID INT,
+    OUT recording_sessions_has_artists_ID INT)
+BEGIN
+INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
+VALUES ((SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID),
+        (SELECT artist_ID FROM Artists WHERE artist_ID = p_artist_ID));
+
+    -- Store the ID of the last inserted row
+    SELECT LAST_INSERT_ID() into recording_sessions_has_artists_ID;
+
+END //
+DELIMITER ;
+
+-- #############################
+-- UPDATE a Recording Sessions and Artists pairing
+-- #############################
+DROP PROCEDURE IF EXISTS sp_UpdateRecordingSessionAndArtistPairing;
+
+DELIMITER //
+CREATE PROCEDURE sp_UpdateRecordingSessionAndArtistPairing(
+    IN p_recording_sessions_has_artists_ID INT,
+    IN p_session_ID INT,
+    IN p_artist_ID INT)
+
+BEGIN
+UPDATE Recording_Sessions_has_Artists
+SET session_ID = (SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID), 
+    artist_ID = (SELECT artist_ID FROM Artists WHERE artist_ID = p_artist_ID)
+WHERE recording_sessions_has_artists_ID = p_recording_sessions_has_artists_ID;
+
+END //
+DELIMITER ;
+
+-- #############################
+-- DELETE a Recording Sessions and Artists pairing
+-- #############################
+
+DROP PROCEDURE IF EXISTS sp_DeleteRecordingSessionAndArtistPairing;
+
+DELIMITER //
+CREATE PROCEDURE sp_DeleteRecordingSessionAndArtistPairing(IN p_recording_sessions_has_artists_ID INT)
 BEGIN
     DECLARE error_message VARCHAR(255); 
 
@@ -228,16 +299,12 @@ BEGIN
     END;
 
     START TRANSACTION;
-        -- Deleting corresponding rows from both bsg_people table and 
-        --      intersection table to prevent a data anamoly
-        -- This can also be accomplished by using an 'ON DELETE CASCADE' constraint
-        --      inside the bsg_cert_people table.
-        DELETE FROM bsg_cert_people WHERE pid = p_id;
-        DELETE FROM bsg_people WHERE id = p_id;
+        -- Delete the manager from the Managers table
+        DELETE FROM `Recording_Sessions_has_Artists` WHERE recording_sessions_has_artists_ID = p_recording_sessions_has_artists_ID;
 
         -- ROW_COUNT() returns the number of rows affected by the preceding statement.
         IF ROW_COUNT() = 0 THEN
-            set error_message = CONCAT('No matching record found in bsg_people for id: ', p_id);
+            set error_message = CONCAT('No matching record found in Recording_Sessions_has_Artists for recording_sessions_has_artists_ID: ', p_recording_sessions_has_artists_ID);
             -- Trigger custom error, invoke EXIT HANDLER
             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
         END IF;
@@ -246,3 +313,91 @@ BEGIN
 
 END //
 DELIMITER ;
+
+
+
+
+
+
+
+
+
+
+-- -- #############################
+-- -- CREATE bsg_people
+-- -- #############################
+-- DROP PROCEDURE IF EXISTS sp_CreatePerson;
+
+-- DELIMITER //
+-- CREATE PROCEDURE sp_CreatePerson(
+--     IN p_fname VARCHAR(255), 
+--     IN p_lname VARCHAR(255), 
+--     IN p_homeworld INT, 
+--     IN p_age INT,
+--     OUT p_id INT)
+-- BEGIN
+--     INSERT INTO bsg_people (fname, lname, homeworld, age) 
+--     VALUES (p_fname, p_lname, p_homeworld, p_age);
+
+--     -- Store the ID of the last inserted row
+--     SELECT LAST_INSERT_ID() into p_id;
+--     -- Display the ID of the last inserted person.
+--     SELECT LAST_INSERT_ID() AS 'new_id';
+
+--     -- Example of how to get the ID of the newly created person:
+--         -- CALL sp_CreatePerson('Theresa', 'Evans', 2, 48, @new_id);
+--         -- SELECT @new_id AS 'New Person ID';
+-- END //
+-- DELIMITER ;
+
+-- -- #############################
+-- -- UPDATE bsg_people
+-- -- #############################
+-- DROP PROCEDURE IF EXISTS sp_UpdatePerson;
+
+-- DELIMITER //
+-- CREATE PROCEDURE sp_UpdatePerson(IN p_id INT, IN p_homeworld INT, IN p_age INT)
+
+-- BEGIN
+--     UPDATE bsg_people SET homeworld = p_homeworld, age = p_age WHERE id = p_id; 
+-- END //
+-- DELIMITER ;
+
+-- -- #############################
+-- -- DELETE bsg_people
+-- -- #############################
+-- DROP PROCEDURE IF EXISTS sp_DeletePerson;
+
+-- DELIMITER //
+-- CREATE PROCEDURE sp_DeletePerson(IN p_id INT)
+-- BEGIN
+--     DECLARE error_message VARCHAR(255); 
+
+--     -- error handling
+--     DECLARE EXIT HANDLER FOR SQLEXCEPTION
+--     BEGIN
+--         -- Roll back the transaction on any error
+--         ROLLBACK;
+--         -- Propogate the custom error message to the caller
+--         RESIGNAL;
+--     END;
+
+--     START TRANSACTION;
+--         -- Deleting corresponding rows from both bsg_people table and 
+--         --      intersection table to prevent a data anamoly
+--         -- This can also be accomplished by using an 'ON DELETE CASCADE' constraint
+--         --      inside the bsg_cert_people table.
+--         DELETE FROM bsg_cert_people WHERE pid = p_id;
+--         DELETE FROM bsg_people WHERE id = p_id;
+
+--         -- ROW_COUNT() returns the number of rows affected by the preceding statement.
+--         IF ROW_COUNT() = 0 THEN
+--             set error_message = CONCAT('No matching record found in bsg_people for id: ', p_id);
+--             -- Trigger custom error, invoke EXIT HANDLER
+--             SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+--         END IF;
+
+--     COMMIT;
+
+-- END //
+-- DELIMITER ;
