@@ -8,6 +8,7 @@
     "build": "vite build",
     "production": "npx forever start reactServer.cjs",
     "stop_production": "npx forever stop reactServer.cjs",
+    "restart_production": "npm run stop_production; npm run build; npm run production",
     "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
 },

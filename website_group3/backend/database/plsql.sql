@@ -116,7 +116,37 @@ DELIMITER ;
 -- #############################
 -- DELETE a manager
 -- #############################
+DROP PROCEDURE IF EXISTS sp_DeleteManager;
 
+DELIMITER //
+CREATE PROCEDURE sp_DeleteManager(IN p_manager_ID INT)
+BEGIN
+    DECLARE error_message VARCHAR(255); 
+
+    -- error handling
+    DECLARE EXIT HANDLER FOR SQLEXCEPTION
+    BEGIN
+        -- Roll back the transaction on any error
+        ROLLBACK;
+        -- Propogate the custom error message to the caller
+        RESIGNAL;
+    END;
+
+    START TRANSACTION;
+        -- Delete the manager from the Managers table
+        DELETE FROM `Managers` WHERE manager_ID = p_manager_ID;
+
+        -- ROW_COUNT() returns the number of rows affected by the preceding statement.
+        IF ROW_COUNT() = 0 THEN
+            set error_message = CONCAT('No matching record found in Managers for manager_ID: ', p_manager_ID);
+            -- Trigger custom error, invoke EXIT HANDLER
+            SIGNAL SQLSTATE '45000' SET MESSAGE_TEXT = error_message;
+        END IF;
+
+    COMMIT;
+
+END //
+DELIMITER ;
 
 -- #############################
 -- CREATE a room
@@ -135,6 +165,33 @@ BEGIN
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into room_ID;
 
+END //
+DELIMITER ;
+
+-- #############################
+-- CREATE bsg_people
+-- #############################
+DROP PROCEDURE IF EXISTS sp_CreatePerson;
+
+DELIMITER //
+CREATE PROCEDURE sp_CreatePerson(
+    IN p_fname VARCHAR(255), 
+    IN p_lname VARCHAR(255), 
+    IN p_homeworld INT, 
+    IN p_age INT,
+    OUT p_id INT)
+BEGIN
+    INSERT INTO bsg_people (fname, lname, homeworld, age) 
+    VALUES (p_fname, p_lname, p_homeworld, p_age);
+
+    -- Store the ID of the last inserted row
+    SELECT LAST_INSERT_ID() into p_id;
+    -- Display the ID of the last inserted person.
+    SELECT LAST_INSERT_ID() AS 'new_id';
+
+    -- Example of how to get the ID of the newly created person:
+        -- CALL sp_CreatePerson('Theresa', 'Evans', 2, 48, @new_id);
+        -- SELECT @new_id AS 'New Person ID';
 END //
 DELIMITER ;
 

@@ -2,8 +2,12 @@
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
+// Code for Create Routes - Rooms "const query2.." and "const [[{ room_ID }]].." copied from Microsoft Copilot
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+// URL: https://copilot.microsoft.com/
+// AI Tools Prompt: The Submit button to the Add a Room form is not working, I need to press Submit and then refresh the 
+// page for the data entered in the form to be added to the table. This is my current route, [Pasted the Create Route for Rooms]. 
 
 // ########################################
 // ########## SETUP
@@ -225,13 +229,14 @@ app.post('/rooms/create', async function (req, res) {
         let data = req.body;
 
         // Execute the stored procedure and capture the output
-        const [[rows]] = await db.query(`CALL sp_CreateRoom(?, ?, @room_ID);`, [
+        const query1 = `CALL sp_CreateRoom(?, ?, @room_ID);`;
+        const query2 = `SELECT @room_ID AS room_ID;`;
+        await db.query(query1, [
             data.create_room_square_footage,
-            data.create_room_floor
+            data.create_room_floor,
         ]);
-
-        // Fetch the room_ID directly after calling the stored procedure
-        const [[{ room_ID }]] = await db.query(`SELECT @room_ID;`);
+        
+        const [[{ room_ID }]] = await db.query(query2);
 
         console.log(`CREATE room. ID: ${room_ID}, 
             Square Footage: ${data.create_room_square_footage}, Floor: ${data.create_room_floor}`
@@ -341,7 +346,30 @@ app.post('/artists/delete', async function (req, res) {
     }
 });
 
+app.post('/managers/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
 
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteManager(?);`;
+        await db.query(query1, [data.delete_manager_ID]);
+
+        console.log(`DELETE Manager. ID: ${data.delete_manager_ID} ` +
+            `Name: ${data.delete_manager_name}`
+        );
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/managers');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 // ########################################
 // ########## LISTENER

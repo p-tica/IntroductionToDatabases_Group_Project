@@ -3,9 +3,11 @@
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code in lines 47-53 (clearing form fields after submit is pressed) copied from Microsoft Copilot
+// Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/chats/VtYAXL4FfdF2cCVsbvCD2
+// URL: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required
 // AI Tools Prompt: "[Included this page in my prompt] What change can I make so that the data that I just 
 // entered in the update an artist fields doesn't remain in those fields after submit is pressed?"
 
@@ -101,6 +103,7 @@ const UpdateArtistForm = ({ artists, managers, backendURL, refreshArtists }) => 
                 id="update_name"
                 value={formData.update_name}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="update_phone_number">Phone Number: </label>
@@ -110,6 +113,7 @@ const UpdateArtistForm = ({ artists, managers, backendURL, refreshArtists }) => 
                 id="update_phone_number"
                 value={formData.update_phone_number}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="update_email">Email: </label>
@@ -119,6 +123,7 @@ const UpdateArtistForm = ({ artists, managers, backendURL, refreshArtists }) => 
                 id="update_email"
                 value={formData.update_email}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />

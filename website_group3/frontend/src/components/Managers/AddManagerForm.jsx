@@ -3,11 +3,13 @@
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code in lines 44-48 (clearing form fields after submit is pressed) copied from Microsoft Copilot
 // Code adapted from the bsg files from Exploration - Web Application Technology
+// Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/chats/VtYAXL4FfdF2cCVsbvCD2
+// URL: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required
 // AI Tools Prompt: "[Included this page in my prompt] What change can I make so that the data that I just 
-// entered in the add an manager fields doesn't remain in those fields after submit is pressed?"
+// entered in the Add a Manager fields doesn't remain in those fields after submit is pressed?"
 
 import React, { useState } from 'react';
 
@@ -66,6 +68,7 @@ const AddManagerForm = ({ backendURL, refreshManagers }) => {
                 id="create_manager_name"
                 value={formData.create_manager_name}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="create_manager_phone_number">Phone Number: </label>
@@ -75,6 +78,7 @@ const AddManagerForm = ({ backendURL, refreshManagers }) => {
                 id="create_manager_phone_number"
                 value={formData.create_manager_phone_number}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="create_manager_email">Email: </label>
@@ -84,6 +88,7 @@ const AddManagerForm = ({ backendURL, refreshManagers }) => {
                 id="create_manager_email"
                 value={formData.create_manager_email}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />

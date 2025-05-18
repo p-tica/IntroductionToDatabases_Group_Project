@@ -1,11 +1,13 @@
 // Citation for following page:
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
-// Code in lines 39-44 (clearing form fields after submit is pressed) copied from Microsoft Copilot
+// Code in lines 45-50 (clearing form fields after submit is pressed) copied from Microsoft Copilot
 // Code adapted from the bsg files from Exploration - Web Application Technology
+// Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/chats/VtYAXL4FfdF2cCVsbvCD2
+// URL: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required
 // AI Tools Prompt: "[Included this page in my prompt] What change can I make so that the data that I just 
 // entered in the add an artist fields doesn't remain in those fields after submit is pressed?"
 
@@ -82,6 +84,7 @@ const AddArtistForm = ({ managers, backendURL, refreshArtists }) => {
                 id="create_artist_name"
                 value={formData.create_artist_name}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="create_artist_phone_number">Phone Number: </label>
@@ -91,6 +94,7 @@ const AddArtistForm = ({ managers, backendURL, refreshArtists }) => {
                 id="create_artist_phone_number"
                 value={formData.create_artist_phone_number}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="create_artist_email">Email: </label>
@@ -100,6 +104,7 @@ const AddArtistForm = ({ managers, backendURL, refreshArtists }) => {
                 id="create_artist_email"
                 value={formData.create_artist_email}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />

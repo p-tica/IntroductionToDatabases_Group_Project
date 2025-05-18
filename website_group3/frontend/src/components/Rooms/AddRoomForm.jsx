@@ -3,11 +3,13 @@
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code in lines 43-46 (clearing form fields after submit is pressed) copied from Microsoft Copilot
 // Code adapted from the bsg files from Exploration - Web Application Technology
+// Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/chats/VtYAXL4FfdF2cCVsbvCD2
+// URL: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required
 // AI Tools Prompt: "[Included this page in my prompt] What change can I make so that the data that I just 
-// entered in the add a room fields doesn't remain in those fields after submit is pressed?"
+// entered in the Add a Room fields doesn't remain in those fields after submit is pressed?"
 
 import React, { useState } from 'react';
 
@@ -65,6 +67,7 @@ const AddRoomForm = ({ backendURL, refreshRooms }) => {
                 id="create_room_square_footage"
                 value={formData.create_room_square_footage}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="create_room_floor">Floor: </label>
@@ -74,6 +77,7 @@ const AddRoomForm = ({ backendURL, refreshRooms }) => {
                 id="create_room_floor"
                 value={formData.create_room_floor}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />

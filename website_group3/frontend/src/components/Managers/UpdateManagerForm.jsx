@@ -2,12 +2,19 @@
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
+// Code in lines 45-50 (clearing form fields after submit is pressed) copied from Microsoft Copilot
+// Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+// URL: https://copilot.microsoft.com/chats/VtYAXL4FfdF2cCVsbvCD2
+// URL: https://developer.mozilla.org/en-US/docs/Web/HTML/Reference/Attributes/required
+// AI Tools Prompt: "[Included this page in my prompt] What change can I make so that the data that I just 
+// entered in the Update a Manager fields doesn't remain in those fields after submit is pressed?"
 
 import React, { useState } from 'react';
 
 const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
+    console.log({managers})
     const [formData, setFormData] = useState({
         update_manager_ID: '',
         update_manager_name: '',
@@ -37,6 +44,12 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
             if (response.ok) {
                 console.log("Manager updated successfully.");
                 refreshManagers();
+                setFormData({
+                    update_manager_ID: '',
+                    update_manager_name: '',
+                    update_manager_phone_number: '',
+                    update_manager_email: ''
+                })
             } else {
                 console.error("Error updating manager.");
             }
@@ -57,9 +70,9 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
                 onChange={handleChange}
             >
                 <option value="">Select a Manager</option>
-                {managers.map((managers) => (
-                    <option key={managers.id} value={managers.id}>
-                        {managers.Name}
+                {managers.map((manager) => (
+                    <option key={manager.manager_ID} value={manager.manager_ID}>
+                        {manager.Name}
                     </option>
                 ))}
             </select>
@@ -71,6 +84,7 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
                 id="update_manager_name"
                 value={formData.update_manager_name}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="update_manager_phone_number">Phone Number: </label>
@@ -80,6 +94,7 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
                 id="update_manager_phone_number"
                 value={formData.update_manager_phone_number}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="update_manager_email">Email: </label>
@@ -89,6 +104,7 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
                 id="update_manager_email"
                 value={formData.update_manager_email}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />
