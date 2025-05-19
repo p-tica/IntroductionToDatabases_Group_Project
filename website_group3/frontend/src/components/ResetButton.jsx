@@ -1,31 +1,40 @@
-const ResetButton = ({ backendURL}) => {
+// Citation:
+// Date: 05/22/2025
+// Referenced MDN Web Docs for window.confirm and window.location.reload()
+// URL: https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm
+// URL: https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
 
-    const handleSubmit = async (e) => {
+const ResetButton = ({ backendURL }) => {
+
+    const handleReset = async (e) => {
         e.preventDefault(); // Prevent default form submission
 
-        try {
-            const response = await fetch(backendURL + '/reset', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-            });
+        const confirmed = window.confirm("Reset all data?");
 
-            if (response.ok) {
-                console.log("Invoice added successfully.");
+        if (confirmed) {
+            try {
+                const response = await fetch(backendURL + '/resetbutton', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                });
 
-            } else {
-                console.error("Error resetting database.");
+                if (response.ok) {
+                    console.log("Database reset successfully.");
+                    window.location.reload();
+                } else {
+                    console.error(`Error resetting database: ${await response.text()}`);
+                }
+            } catch (error) {
+                console.error('Error during reset:', error);
             }
-        } catch (error) {
-            console.error('Error during reset:', error);
         }
     };
     return (
-        <form>
-            <button type='submit'
-            onClick={handleSubmit}>
-                Reset
-            </button>
-        </form>
+        <button 
+            onClick={handleReset} 
+            className="reset-button">
+            RESET
+        </button>
 
     );
 };

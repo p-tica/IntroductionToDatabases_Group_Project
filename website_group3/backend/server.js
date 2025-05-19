@@ -544,7 +544,7 @@ app.post('/recording_sessions_has_artists/delete', async function (req, res) {
 });
 
 // RESET DATABASE ROUTE
-app.post('/reset', async function (req, res) {
+app.post('/resetbutton', async function (req, res) {
     try {
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
