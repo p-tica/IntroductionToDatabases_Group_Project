@@ -18,6 +18,7 @@ import Reset from './pages/Reset';
 
 // Components
 import Navigation from './components/Navigation';
+import ResetButton from './components/ResetButton';
 
 // Define the backend port and URL for API requests
 const backendPort = 60000;  // Use the port you assigned to the backend server, this would normally go in a .env file
@@ -36,6 +37,7 @@ function App() {
                 <Route path="/invoices" element={<Invoices backendURL={backendURL} />} />
                 <Route path="/recording_sessions" element={<Recording_Sessions backendURL={backendURL} />} />
                 <Route path="/recording_sessions_has_artists" element={<Recording_Sessions_has_Artists backendURL={backendURL} />} />
+                <Route path="reset" element={<ResetButton backendURL={backendURL} />} />
             </Routes>
         </>
     );

@@ -249,6 +249,99 @@ app.post('/rooms/create', async function (req, res) {
     }
 });
 
+app.post('/invoices/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+
+        // Create and execute queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateInvoice(?, ?, ?, @invoice_ID);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_invoice_session_ID,
+            data.create_invoice_session_cost,
+            data.create_invoice_invoice_paid,
+        ]);
+
+        console.log(`CREATE invoice. ID: ${rows.invoice_ID} ` +
+            `Session: ${data.create_invoice_session_ID}, Cost: ${data.create_invoice_session_cost}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Invoice created successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/recording_sessions/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+
+        // Create and execute queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateRecordingSession(?, ?, @session_ID);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_recording_session_room_ID,
+            data.create_recording_session_duration,
+        ]);
+
+        console.log(`CREATE recording_session. ID: ${rows.session_ID} ` +
+            `Duration: ${data.create_recording_session_duration}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Recording Session created successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/recording_sessions_has_artists/create', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+
+        // Create and execute queries
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_CreateRecordingSessionAndArtistPairing(?, ?, @recording_session_has_artists_ID);`;
+
+        // Store ID of last inserted row
+        const [[[rows]]] = await db.query(query1, [
+            data.create_recording_session_has_artists_session_ID,
+            data.create_recording_session_has_artists_artist_ID,
+        ]);
+
+        console.log(`CREATE recording_session_has_artists. ID: ${rows.recording_session_has_artists_ID} ` +
+            `Session: ${data.create_recording_session_has_artists_session_ID}, Artist: ${data.create_recording_session_has_artists_artist_ID}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Recording Session and Artists pairing created successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
 
 // UPDATE ROUTES
 app.post('/artists/update', async function (req, res) {
@@ -320,6 +413,62 @@ app.post('/managers/update', async function (req, res) {
     }
 });
 
+app.post('/invoices/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+        
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateManager(?, @paid_confirmation);';
+        const [[rows]] = await db.query(query1, [
+            data.update_invoice_session_ID,
+        ]);
+
+        console.log(`UPDATE Invoice. ID: ${data.update_invoice_session_ID} ` +
+            `Status: ${rows.paid_confirmation}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Invoice updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+app.post('/recording_sessions_has_artists/update', async function (req, res) {
+    try {
+        // Parse frontend form information
+        const data = req.body;
+        
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_UpdateRecordingSessionAndArtistPairing(?, ?, ?);';
+        await db.query(query1, [
+            data.update_recording_session_and_artist_pairing_ID,
+            data.update_recording_session_and_artist_pairing_session_ID,
+            data.update_recording_session_and_artist_pairing_artist_ID,
+        ]);
+
+        console.log(`UPDATE recording_sessions_has_artists. ID: ${data.update_recording_session_and_artist_pairing_ID} ` +
+            `Session: ${data.update_recording_session_and_artist_pairing_session_ID}, Artists: ${data.update_recording_session_and_artist_pairing_artist_ID}`
+        );
+
+        // Send success status to frontend
+        res.status(200).json({ message: 'Recording Session and Artist pairing updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
 // DELETE ROUTES
 app.post('/artists/delete', async function (req, res) {
     try {
@@ -370,6 +519,47 @@ app.post('/managers/delete', async function (req, res) {
         );
     }
 });
+
+app.post('/recording_sessions_has_artists/delete', async function (req, res) {
+    try {
+        // Parse frontend form information
+        let data = req.body;
+
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = `CALL sp_DeleteRecordingSessionAndArtistPairing(?);`;
+        await db.query(query1, [data.delete_recording_session_and_artist_pairing_ID]);
+
+        console.log(`DELETE recording_sessions_has_artists. ID: ${data.delete_recording_session_and_artist_pairing_ID}`);
+
+        // Redirect the user to the updated webpage data
+        res.redirect('/recording_sessions_has_artists');
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic error message to the browser
+        res.status(500).send(
+            'An error occurred while executing the database queries.'
+        );
+    }
+});
+
+// RESET DATABASE ROUTE
+app.post('/reset', async function (req, res) {
+    try {
+        // Create and execute our query
+        // Using parameterized queries (Prevents SQL injection attacks)
+        const query1 = 'CALL sp_ResetDatabase();';
+        await db.query(query1);
+
+        res.status(200).json({ message: 'Recording Session and Artist pairing updated successfully' });
+    } catch (error) {
+        console.error('Error executing queries:', error);
+        // Send a generic message to the browser
+        res.status(500).send(
+            'An error occured while executing the database queries.'
+        )
+    }
+})
 
 // ########################################
 // ########## LISTENER
