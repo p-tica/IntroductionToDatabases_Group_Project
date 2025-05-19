@@ -9,9 +9,9 @@ function Navigation({ backendURL }) {
     return (
         <nav>
             <a href="/">Home</a>
-            <a href="/recording_sessions">Recording_Sessions</a>
+            <a href="/recording_sessions">Recording Sessions</a>
             <a href="/artists">Artists</a>
-            <a href="/recording_sessions_has_artists">Recording_Sessions_has_Artists</a>
+            <a href="/recording_sessions_has_artists">Recording Sessions and Artists</a>
             <a href="/managers">Managers</a>
             <a href="/invoices">Invoices</a>
             <a href="/rooms">Rooms</a>

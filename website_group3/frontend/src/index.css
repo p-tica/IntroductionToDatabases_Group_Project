@@ -9,7 +9,7 @@ th {background-color: #f2f2f2;}
 tr:nth-child(even) {background-color: #f9f9f9;}
 .cuForm { margin-left: 32px;}
 input, select { margin-bottom: 4px;margin-right: 12px;}
-nav {background-color: rgb(185, 205, 206);padding: 20px; border-radius: 18px; 
+nav {background-color: rgb(120, 177, 180);padding: 20px; border-radius: 35px; 
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     text-align: center;}
 a {margin-left: 16px;}
@@ -19,4 +19,13 @@ a {margin-left: 16px;}
     margin-left: 50px;
     color: rgb(144, 0, 0);
     font-weight: bold;
+}
+
+a:link, a:visited {
+  text-decoration: none;
+  color: rgb(0, 0, 0)
+}
+
+a:hover {
+  text-decoration: underline;
 }
