@@ -140,14 +140,14 @@ DROP PROCEDURE IF EXISTS sp_CreateArtist;
 
 DELIMITER //
 CREATE PROCEDURE sp_CreateArtist(
-    IN manager_ID INT, 
+    IN p_manager_ID INT, 
     IN name VARCHAR(145), 
     IN phone_number VARCHAR(15), 
     IN email VARCHAR(145),
     OUT artist_ID INT)
 BEGIN
     INSERT INTO Artists (manager_ID, name, phone_number, email) 
-    VALUES (manager_ID, name, phone_number, email);
+    VALUES ((SELECT manager_ID FROM Managers WHERE manager_ID = p_manager_ID), name, phone_number, email);
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into artist_ID;
