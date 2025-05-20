@@ -2,7 +2,7 @@
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
-// Code in lines 45-50 (clearing form fields after submit is pressed) copied from Microsoft Copilot
+// Code in lines 47-52 (clearing form fields after submit is pressed) copied from Microsoft Copilot
 // Set input fields to required using mdn web docs. Webpage: HTML attribute: required
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
