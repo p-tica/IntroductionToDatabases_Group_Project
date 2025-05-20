@@ -7,8 +7,6 @@
 
 const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
 
-
-    
     return (
         <>
         <h2>Update an Invoice</h2>
