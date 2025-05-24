@@ -327,16 +327,18 @@ DROP PROCEDURE IF EXISTS sp_UpdateInvoice;
 
 DELIMITER //
 CREATE PROCEDURE sp_UpdateInvoice(
+    IN p_invoice_ID INT,
     IN p_session_ID INT,
-    OUT paid_confirmation VARCHAR(10))
-
+    IN p_session_cost INT,
+    IN p_invoice_paid TINYINT
+)
 
 BEGIN
 UPDATE Invoices
-SET invoice_paid = 1
-WHERE session_ID = p_session_ID;
-
-    SET paid_confirmation = 'Paid';
+SET session_ID = (SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID), 
+    session_cost = session_cost,
+    invoice_paid = invoice_paid
+WHERE invoice_ID = p_invoice_ID;
 
 END //
 DELIMITER ;
