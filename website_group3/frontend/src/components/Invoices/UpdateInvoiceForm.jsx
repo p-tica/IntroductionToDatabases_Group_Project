@@ -2,20 +2,68 @@
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
+// Code in lines 47-52 (clearing form fields after submit is pressed) copied from Microsoft Copilot (see UpdateManagerForm.jsx)
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 
-const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
+import React, { useState } from 'react';
+
+const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, backendURL }) => {
+
+const [formData, setFormData] = useState({
+        update_invoice_ID: '',
+        update_invoice_session_ID: '',
+        update_invoice_session_cost: '',
+        update_invoice_invoice_paid: ''
+    });
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+        setFormData(prevState => ({
+            ...prevState,
+            [name]: value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        // Handle the update logic here
+
+        try {
+            const response = await fetch(backendURL + '/invoices/update', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(formData),
+            });
+
+            if (response.ok) {
+                console.log("Invoice updated successfully.");
+                refreshInvoices();
+                setFormData({
+                    update_invoice_ID: '',
+                    update_invoice_session_ID: '',
+                    update_invoice_session_cost: '',
+                    update_invoice_invoice_paid: ''
+                })
+            } else {
+                console.error("Error updating invoice.");
+            }
+        } catch (error) {
+            console.error('Error during form submission:', error);
+        }
+    };
+
 
     return (
         <>
         <h2>Update an Invoice</h2>
-        <form className='cuForm'>
-
-            <label htmlFor="update_invoice_id">Invoice: </label>
+        <form className='cuForm' onSubmit={handleSubmit}>
+            <label htmlFor="update_invoice_ID">Invoice: </label>
             <select
-                name="update_invoice_id"
-                id="update_invoice_id"
+                name="update_invoice_ID"
+                id="update_invoice_ID"
+                value={formData.update_invoice_ID}
+                onChange={handleChange}
             >
                 <option value="">Select an Invoice</option>
                 {invoices.map((invoice, index) => (
@@ -23,10 +71,12 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
                 ))}
             </select>
 
-            <label htmlFor="update_recording_session_id">Recording Session: </label>
+            <label htmlFor="update_invoice_session_ID">Recording Session: </label>
             <select
-                name="update_recording_session_id"
-                id="update_recording_session_id"
+                name="update_invoice_session_ID"
+                id="update_invoice_session_ID"
+                value={formData.update_invoice_session_ID}
+                onChange={handleChange}
             >
                 <option value="">Select a Recording Session</option>
                 {recording_sessions.map((recording_session, index) => (
@@ -34,18 +84,22 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions }) => {
                 ))}
             </select>
 
-            <label htmlFor="update_sessionc_cost">Cost: </label>
+            <label htmlFor="update_invoice_session_cost">Cost: </label>
             <input
                 type="number"
-                name="update_sessionc_cost"
-                id="update_sessionc_cost"
+                name="update_invoice_session_cost"
+                id="update_invoice_session_cost"
+                value={formData.update_invoice_session_cost}
+                onChange={handleChange}
             />
 
-            <label htmlFor="update_paid">Paid: </label>
+            <label htmlFor="update_invoice_invoice_paid">Paid: </label>
             <input
                 type="number"
-                name="update_paid"
-                id="update_paid"
+                name="update_invoice_invoice_paid"
+                id="update_invoice_invoice_paid"
+                value={formData.update_invoice_invoice_paid}
+                onChange={handleChange}
             />
 
             <input type="submit" />
