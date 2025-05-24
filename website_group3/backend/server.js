@@ -420,13 +420,18 @@ app.post('/invoices/update', async function (req, res) {
         
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
-        const query1 = 'CALL sp_UpdateManager(?, @paid_confirmation);';
-        const [[rows]] = await db.query(query1, [
+        const query1 = 'CALL sp_UpdateManager(?, ?, ?, ?);';
+        const query2 = 'SELECT invoice_ID, session_ID, session_cost, invoice_paid FROM Invoices WHERE invoice_ID = ?;';
+        await db.query(query1, [
+            data.update_invoice_ID,
             data.update_invoice_session_ID,
+            data.update_invoice_session_cost,
+            data.update_invoice_invoice_paid,
         ]);
+        const[[rows]] = await db.query(query2, [data.update_invoice_ID]);
 
-        console.log(`UPDATE Invoice. ID: ${data.update_invoice_session_ID} ` +
-            `Status: ${rows.paid_confirmation}`
+        console.log(`UPDATE Invoice. ID: ${data.update_invoice_ID} ` +
+            `Session: ${rows.update_invoice_session_ID}, Cost: ${rows.update_invoice_session_cost}, Status: ${rows.paid_confirmation}`
         );
 
         // Send success status to frontend
