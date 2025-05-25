@@ -17,7 +17,6 @@ import Recording_Sessions_has_Artists from './pages/Recording_Sessions_has_Artis
 
 // Components
 import Navigation from './components/Navigation';
-import ResetButton from './components/ResetButton';
 
 // Define the backend port and URL for API requests
 const backendPort = 60000;  // Use the port you assigned to the backend server, this would normally go in a .env file
