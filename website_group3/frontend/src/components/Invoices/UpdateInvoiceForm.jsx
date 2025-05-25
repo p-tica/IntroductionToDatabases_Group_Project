@@ -2,7 +2,7 @@
 // Date: 05/22/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
-// Code in lines 47-52 (clearing form fields after submit is pressed) copied from Microsoft Copilot (see UpdateManagerForm.jsx)
+// Code in lines 42-47 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 
@@ -10,7 +10,7 @@ import React, { useState } from 'react';
 
 const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, backendURL }) => {
 
-const [formData, setFormData] = useState({
+    const [formData, setFormData] = useState({
         update_invoice_ID: '',
         update_invoice_session_ID: '',
         update_invoice_session_cost: '',
@@ -52,8 +52,6 @@ const [formData, setFormData] = useState({
             console.error('Error during form submission:', error);
         }
     };
-
-
     return (
         <>
         <h2>Update an Invoice</h2>
