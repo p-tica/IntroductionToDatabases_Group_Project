@@ -28,7 +28,7 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
         // Handle the update logic here
 
         try {
-            const response = await fetch(backendURL + '/recording_session_has_artists/update', {
+            const response = await fetch(backendURL + '/recording_sessions_has_artists/update', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(formData),
