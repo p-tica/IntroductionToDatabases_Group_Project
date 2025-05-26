@@ -89,11 +89,10 @@ VALUES (:square_footage, :floor);
 
 -- Display Invoices
 
-SELECT Invoices.invoice_ID, Artists.name AS 'Artist', Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+SELECT Invoices.invoice_ID, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
 FROM Invoices
 JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
-JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID
-JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
+JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID;
 
 -- Add row to Invoices
 
@@ -114,10 +113,8 @@ WHERE session_ID = :session_ID;
 
 -- Display Recording_Sessions
 
-SELECT Recording_Sessions.session_ID, Artists.name AS 'Artist', Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
-FROM Recording_Sessions
-JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID
-JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
+SELECT Recording_Sessions.session_ID, Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
+FROM Recording_Sessions;
 
 --
 -- Add row to Recording_Sessions
