@@ -62,6 +62,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
                 id="update_invoice_ID"
                 value={formData.update_invoice_ID}
                 onChange={handleChange}
+                required
             >
                 <option value="">Select an Invoice</option>
                 {invoices.map((invoice, index) => (
@@ -75,6 +76,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
                 id="update_invoice_session_ID"
                 value={formData.update_invoice_session_ID}
                 onChange={handleChange}
+                required
             >
                 <option value="">Select a Recording Session</option>
                 {recording_sessions.map((recording_session, index) => (
@@ -89,6 +91,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
                 id="update_invoice_session_cost"
                 value={formData.update_invoice_session_cost}
                 onChange={handleChange}
+                required
             />
 
             <label htmlFor="update_invoice_invoice_paid">Paid: </label>
@@ -98,6 +101,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
                 id="update_invoice_invoice_paid"
                 value={formData.update_invoice_invoice_paid}
                 onChange={handleChange}
+                required
             />
 
             <input type="submit" />

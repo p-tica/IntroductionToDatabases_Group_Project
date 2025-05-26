@@ -12,9 +12,9 @@ import React, { useState } from 'react';
 
 const AddInvoiceForm = ({ backendURL, recording_sessions, refreshInvoices }) => {
     const [formData, setFormData] = useState({
-        add_recording_session_ID: '',
-        add_session_cost: '',
-        add_paid: ''
+        create_invoice_session_ID: '',
+        create_invoice_session_cost: '',
+        create_invoice_invoice_paid: ''
     });
 
     const handleChange = (e) => {
@@ -41,9 +41,9 @@ const AddInvoiceForm = ({ backendURL, recording_sessions, refreshInvoices }) => 
 
                 // Clear form fields by resetting state
                 setFormData({
-                    add_recording_session_ID: '',
-                    add_session_cost: '',
-                    add_paid: ''
+                    create_invoice_session_ID: '',
+                    create_invoice_session_cost: '',
+                    create_invoice_invoice_paid: ''
                 });
             } else {
                 console.error("Error adding Invoice.");
@@ -59,35 +59,36 @@ const AddInvoiceForm = ({ backendURL, recording_sessions, refreshInvoices }) => 
 
         <form className='cuForm' onSubmit={handleSubmit}>
 
-            <label htmlFor="add_recording_session_ID">Recording Session: </label>
+            <label htmlFor="create_invoice_session_ID">Recording Session: </label>
             <select
-                name="add_recording_session_ID"
-                id="add_recording_session_ID"
-                value={formData.add_recording_session_ID}
+                name="create_invoice_session_ID"
+                id="create_invoice_session_ID"
+                value={formData.create_invoice_session_ID}
                 onChange={handleChange}
+                required
             >
                 <option value="">Select a Recording Session</option>
                 {recording_sessions.map((recording_sessions, index) => (
-                    <option value={recording_sessions.id} key={index}>{recording_sessions.session_ID}</option>
+                    <option value={recording_sessions.session_ID} key={index}>{recording_sessions.session_ID}</option>
                 ))}
             </select>
 
-            <label htmlFor="add_session_cost">Cost: </label>
+            <label htmlFor="create_invoice_session_cost">Cost: </label>
             <input
                 type="number"
-                name="add_session_cost"
-                id="add_session_cost"
-                value={formData.add_session_cost}
+                name="create_invoice_session_cost"
+                id="create_invoice_session_cost"
+                value={formData.create_invoice_session_cost}
                 onChange={handleChange}
                 required
             />
 
-            <label htmlFor="add_paid">Paid: </label>
+            <label htmlFor="create_invoice_invoice_paid">Paid: </label>
             <input
                 type="number"
-                name="add_paid"
-                id="add_paid"
-                value={formData.add_paid}
+                name="create_invoice_invoice_paid"
+                id="create_invoice_invoice_paid"
+                value={formData.create_invoice_invoice_paid}
                 onChange={handleChange}
                 required
             />

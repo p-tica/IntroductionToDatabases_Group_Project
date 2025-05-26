@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 
 const AddRecordingSessionForm = ({ rooms, backendURL, refreshRecordingSessions }) => {
     const [formData, setFormData] = useState({
-        add_room: '',
-        add_duration: ''
+        create_recording_session_room_ID: '',
+        create_recording_session_duration: ''
     });
 
     const handleChange = (e) => {
@@ -38,8 +38,8 @@ const AddRecordingSessionForm = ({ rooms, backendURL, refreshRecordingSessions }
 
                 // Clear form fields by resetting state
                 setFormData({
-                    add_room: '',
-                    add_duration: ''
+                    create_recording_session_room_ID: '',
+                    create_recording_session_duration: ''
                 });
             } else {
                 console.error("Error adding Recording Session.");
@@ -53,27 +53,27 @@ const AddRecordingSessionForm = ({ rooms, backendURL, refreshRecordingSessions }
         <h2>Add a Recording Session</h2>
 
         <form className='cuForm' onSubmit={handleSubmit}>
-            <label htmlFor="add_room">Room: </label>
+            <label htmlFor="create_recording_session_room_ID">Room: </label>
             <select
-                name="add_room"
-                id="add_room"
-                value={formData.add_room}
+                name="create_recording_session_room_ID"
+                id="create_recording_session_room_ID"
+                value={formData.create_recording_session_room_ID}
                 onChange={handleChange}
                 required
             >
                 <option value="">Select a Room</option>
                 {rooms.map((rooms, index) => (
-                    <option value={rooms.room_id} key={index}>{rooms.room_ID}</option>
+                    <option value={rooms.room_ID} key={index}>{rooms.room_ID}</option>
                 ))}
             </select>
 
-            <label htmlFor="add_duration">Duration: </label>
+            <label htmlFor="create_recording_session_duration">Duration: </label>
             <input
                 type="number"
-                name="add_duration"
-                id="add_duration"
+                name="create_recording_session_duration"
+                id="create_recording_session_duration"
                 step='0.25'
-                value={formData.add_duration}
+                value={formData.create_recording_session_duration}
                 onChange={handleChange}
                 required
             />

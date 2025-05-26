@@ -336,8 +336,8 @@ CREATE PROCEDURE sp_UpdateInvoice(
 BEGIN
 UPDATE Invoices
 SET session_ID = (SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID), 
-    session_cost = session_cost,
-    invoice_paid = invoice_paid
+    session_cost = p_session_cost,
+    invoice_paid = p_invoice_paid
 WHERE invoice_ID = p_invoice_ID;
 
 END //
@@ -351,7 +351,7 @@ DROP PROCEDURE IF EXISTS sp_CreateRecordingSession;
 DELIMITER //
 CREATE PROCEDURE sp_CreateRecordingSession(
     IN p_room_ID INT,
-    IN duration INT,
+    IN duration DECIMAL(15,2),
     OUT session_ID INT)
 BEGIN
     INSERT INTO Recording_Sessions (room_ID, duration) 
@@ -374,7 +374,7 @@ CREATE PROCEDURE sp_CreateRecordingSessionAndArtistPairing(
     IN p_artist_ID INT,
     OUT recording_sessions_has_artists_ID INT)
 BEGIN
-INSERT INTO Recording_Sessions_has_Artists (session_id, artist_ID)
+INSERT INTO Recording_Sessions_has_Artists (session_ID, artist_ID)
 VALUES ((SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID),
         (SELECT artist_ID FROM Artists WHERE artist_ID = p_artist_ID));
 

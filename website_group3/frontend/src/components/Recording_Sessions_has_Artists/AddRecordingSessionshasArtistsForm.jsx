@@ -10,8 +10,8 @@ import React, { useState } from 'react';
 
 const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists, backendURL, refreshRecordingSessionshasArtists,} ) => {
     const [formData, setFormData] = useState({
-        add_session_id: '',
-        add_artist_id: ''
+        create_recording_session_has_artists_session_ID: '',
+        create_recording_session_has_artists_artist_ID: ''
     });
 
     const handleChange = (e) => {
@@ -38,8 +38,8 @@ const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists, backe
 
                 // Clear form fields by resetting state
                 setFormData({
-                    add_session_id: '',
-                    add_artist_id: ''
+                    create_recording_session_has_artists_session_ID: '',
+                    create_recording_session_has_artists_artist_ID: ''
                 });
             } else {
                 console.error("Error pairing Recording Session and Artist.");
@@ -54,31 +54,31 @@ const AddRecordingSessionshasArtistsForm = ({ recording_sessions, artists, backe
 
         <form className='cuForm' onSubmit={handleSubmit}>
 
-            <label htmlFor="add_session_id">Session: </label>
+            <label htmlFor="create_recording_session_has_artists_session_ID">Session: </label>
             <select
-                name="add_session_id"
-                id="add_session_id"
-                value={formData.add_session_id}
+                name="create_recording_session_has_artists_session_ID"
+                id="create_recording_session_has_artists_session_ID"
+                value={formData.create_recording_session_has_artists_session_ID}
                 onChange={handleChange}
                 required
             >
                 <option value="">Select a Session</option>
                 {recording_sessions.map((recording_sessions, index) => (
-                    <option value={recording_sessions.id} key={index}>{recording_sessions.session_ID}</option>
+                    <option value={recording_sessions.session_ID} key={index}>{recording_sessions.session_ID}</option>
                 ))}
             </select>
 
-            <label htmlFor="add_artist_id">Artist: </label>
+            <label htmlFor="create_recording_session_has_artists_artist_ID">Artist: </label>
             <select
-                name="add_artist_id"
-                id="add_artist_id"
-                value={formData.add_artist_id}
+                name="create_recording_session_has_artists_artist_ID"
+                id="create_recording_session_has_artists_artist_ID"
+                value={formData.create_recording_session_has_artists_artist_ID}
                 onChange={handleChange}
                 required
             >
                 <option value="">Select an Artist</option>
-                {artists.map((artists, index) => (
-                    <option value={artists.id} key={index}>{artists.name}</option>
+                {artists.map((artist, index) => (
+                    <option value={artist.artist_ID} key={index}>{artist.name}</option>
                 ))}
             </select>
             <input type="submit" />

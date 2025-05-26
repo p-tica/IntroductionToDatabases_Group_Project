@@ -3,11 +3,14 @@
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code for Create Routes - Rooms "const query2.." and "const [[{ room_ID }]].." copied from Microsoft Copilot
+// Code in lines 492-502 and lines 513-515 (within DELETE Route for Artists) copied from Microsoft Copilot
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/
 // AI Tools Prompt: The Submit button to the Add a Room form is not working, I need to press Submit and then refresh the 
-// page for the data entered in the form to be added to the table. This is my current route, [Pasted the Create Route for Rooms]. 
+// page for the data entered in the form to be added to the table. This is my current route, [Pasted the Create Route for Rooms].
+// AI Tools Prompt: "How can I add a window.alert when a user tries to delete an artist who has a recording session? [Pasted this file]"
+
 
 // ########################################
 // ########## SETUP
@@ -92,11 +95,10 @@ app.get('/invoices', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT Invoices.invoice_ID, Artists.name AS 'Artist', Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+        const query1 = `SELECT Invoices.invoice_ID, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
             FROM Invoices
             JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
-            JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID
-            JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;`;
+            JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID`;
         const query2 = 'SELECT * FROM Recording_Sessions;';
         const [invoices] = await db.query(query1);
         const [recording_sessions] = await db.query(query2);
@@ -115,10 +117,8 @@ app.get('/recording_sessions', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT Recording_Sessions.session_ID, Artists.name AS 'Artist', Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
-            FROM Recording_Sessions
-            JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID
-            JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;`;
+        const query1 = `SELECT Recording_Sessions.session_ID, Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
+            FROM Recording_Sessions`;
         const query2 = 'SELECT * FROM Rooms;';
         const [recording_sessions] = await db.query(query1);
         const [rooms] = await db.query(query2);
@@ -258,20 +258,23 @@ app.post('/invoices/create', async function (req, res) {
         // Create and execute queries
         // Using parameterized queries (Prevents SQL injection attacks)
         const query1 = `CALL sp_CreateInvoice(?, ?, ?, @invoice_ID);`;
+        const query2 = `SELECT @invoice_ID AS invoice_ID;`;
 
         // Store ID of last inserted row
-        const [[[rows]]] = await db.query(query1, [
+        await db.query(query1, [
             data.create_invoice_session_ID,
             data.create_invoice_session_cost,
             data.create_invoice_invoice_paid,
         ]);
 
-        console.log(`CREATE invoice. ID: ${rows.invoice_ID} ` +
+        const [[{ invoice_ID }]] = await db.query(query2);
+
+        console.log(`CREATE invoice. ID: ${invoice_ID} ` +
             `Session: ${data.create_invoice_session_ID}, Cost: ${data.create_invoice_session_cost}`
         );
 
         // Send success status to frontend
-        res.status(200).json({ message: 'Invoice created successfully' });
+        res.status(200).json({ message: 'Invoice created successfully', invoice_ID });
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -290,19 +293,22 @@ app.post('/recording_sessions/create', async function (req, res) {
         // Create and execute queries
         // Using parameterized queries (Prevents SQL injection attacks)
         const query1 = `CALL sp_CreateRecordingSession(?, ?, @session_ID);`;
-
-        // Store ID of last inserted row
-        const [[[rows]]] = await db.query(query1, [
-            data.create_recording_session_room_ID,
-            data.create_recording_session_duration,
+        const query2 = `SELECT @session_ID as session_ID;`; 
+        
+        // Store ID of last inserted row 
+        await db.query(query1, [ 
+            data.create_recording_session_room_ID, 
+            data.create_recording_session_duration, 
         ]);
 
-        console.log(`CREATE recording_session. ID: ${rows.session_ID} ` +
+        const [[{ session_ID }]] = await db.query(query2);
+
+        console.log(`CREATE recording_session. ID: ${session_ID} ` +
             `Duration: ${data.create_recording_session_duration}`
         );
 
         // Send success status to frontend
-        res.status(200).json({ message: 'Recording Session created successfully' });
+        res.status(200).json({ message: 'Recording Session created successfully', session_ID });
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser
@@ -321,14 +327,17 @@ app.post('/recording_sessions_has_artists/create', async function (req, res) {
         // Create and execute queries
         // Using parameterized queries (Prevents SQL injection attacks)
         const query1 = `CALL sp_CreateRecordingSessionAndArtistPairing(?, ?, @recording_session_has_artists_ID);`;
+        const query2 = `SELECT @recording_session_has_artists_ID as recording_sessions_has_artists_ID;`;
 
         // Store ID of last inserted row
-        const [[[rows]]] = await db.query(query1, [
+        await db.query(query1, [
             data.create_recording_session_has_artists_session_ID,
             data.create_recording_session_has_artists_artist_ID,
         ]);
 
-        console.log(`CREATE recording_session_has_artists. ID: ${rows.recording_session_has_artists_ID} ` +
+        const [[{ recording_sessions_has_artists_ID }]] = await db.query(query2);
+
+        console.log(`CREATE recording_session_has_artists. ID: ${recording_sessions_has_artists_ID} ` +
             `Session: ${data.create_recording_session_has_artists_session_ID}, Artist: ${data.create_recording_session_has_artists_artist_ID}`
         );
 
@@ -420,7 +429,7 @@ app.post('/invoices/update', async function (req, res) {
         
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
-        const query1 = 'CALL sp_UpdateManager(?, ?, ?, ?);';
+        const query1 = 'CALL sp_UpdateInvoice(?, ?, ?, ?);';
         const query2 = 'SELECT invoice_ID, session_ID, session_cost, invoice_paid FROM Invoices WHERE invoice_ID = ?;';
         await db.query(query1, [
             data.update_invoice_ID,
@@ -480,6 +489,17 @@ app.post('/artists/delete', async function (req, res) {
         // Parse frontend form information
         let data = req.body;
 
+        // Check if the artist has any recording sessions
+        const [[{ count }]] = await db.query(
+            `SELECT COUNT(*) AS count FROM Recording_Sessions_has_Artists WHERE artist_ID = ?`,
+            [data.delete_artist_ID]
+        );
+
+        if (count > 0) {
+            console.log(`Cannot delete ${data.delete_artist_name}, they have recording sessions.`);
+            return res.status(400).json({ message: `Cannot delete ${data.delete_artist_name}. This artist has recording sessions.` });
+        }
+
         // Create and execute our query
         // Using parameterized queries (Prevents SQL injection attacks)
         const query1 = `CALL sp_DeleteArtist(?);`;
@@ -490,7 +510,9 @@ app.post('/artists/delete', async function (req, res) {
         );
 
         // Redirect the user to the updated webpage data
-        res.redirect('/artists');
+        res.status(200).json({ 
+            message: 'Artist deleted successfully' 
+        });
     } catch (error) {
         console.error('Error executing queries:', error);
         // Send a generic error message to the browser

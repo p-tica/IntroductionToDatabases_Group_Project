@@ -10,9 +10,9 @@ import React, { useState } from 'react';
 
 const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists, recording_sessions, artists, backendURL, refreshRecordingSessionshasArtists}) => {
     const [formData, setFormData] = useState({
-        update_recording_sessions_has_artists_id: '',
-        update_session_id: '',
-        update_artist_id: ''
+        update_recording_session_and_artist_pairing_ID: '',
+        update_recording_session_and_artist_pairing_session_ID: '',
+        update_recording_session_and_artist_pairing_artist_ID: ''
     });
 
     const handleChange = (e) => {
@@ -38,9 +38,9 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
                 console.log("Recording Session and Artist pairing updated successfully.");
                 refreshRecordingSessionshasArtists();
                 setFormData({
-                    update_recording_sessions_has_artists_id: '',
-                    update_session_id: '',
-                    update_artist_id: ''
+                    update_recording_session_and_artist_pairing_ID: '',
+                    update_recording_session_and_artist_pairing_session_ID: '',
+                    update_recording_session_and_artist_pairing_artist_ID: ''
                 })
             } else {
                 console.error("Error updating Recording Session and Artist pairing.");
@@ -55,11 +55,11 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
 
         <form className='cuForm' onSubmit={handleSubmit}>
 
-            <label htmlFor="update_recording_sessions_has_artists_id">Pairing: </label>
+            <label htmlFor="update_recording_session_and_artist_pairing_ID">Pairing: </label>
             <select
-                name="update_recording_sessions_has_artists_id"
-                id="update_recording_sessions_has_artists_id"
-                value={formData.update_recording_sessions_has_artists_id}
+                name="update_recording_session_and_artist_pairing_ID"
+                id="update_recording_session_and_artist_pairing_ID"
+                value={formData.update_recording_session_and_artist_pairing_ID}
                 onChange={handleChange}
                 required
             >
@@ -69,11 +69,11 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
                 ))}
             </select>
             
-            <label htmlFor="update_session_id">Session: </label>
+            <label htmlFor="update_recording_session_and_artist_pairing_session_ID">Session: </label>
             <select
-                name="update_session_id"
-                id="update_session_id"
-                value={formData.update_session_id}
+                name="update_recording_session_and_artist_pairing_session_ID"
+                id="update_recording_session_and_artist_pairing_session_ID"
+                value={formData.update_recording_session_and_artist_pairing_session_ID}
                 onChange={handleChange}
                 required
             >
@@ -83,17 +83,17 @@ const UpdateRecordingSessionshasArtistsForm = ({ recording_sessions_has_artists,
                 ))}
             </select>
 
-            <label htmlFor="update_artist_id">Artist: </label>
+            <label htmlFor="update_recording_session_and_artist_pairing_artist_ID">Artist: </label>
             <select
-                name="update_artist_id"
-                id="update_artist_id"
-                value={formData.update_artist_id}
+                name="update_recording_session_and_artist_pairing_artist_ID"
+                id="update_recording_session_and_artist_pairing_artist_ID"
+                value={formData.update_recording_session_and_artist_pairing_artist_ID}
                 onChange={handleChange}
                 required
             >
                 <option value="">Select an Artist</option>
-                {artists.map((artists, index) => (
-                    <option value={artists.id} key={index}>{artists.name}</option>
+                {artists.map((artist, index) => (
+                    <option value={artist.artist_ID} key={index}>{artist.name}</option>
                 ))}
             </select>
 

@@ -9,9 +9,9 @@ const DeleteRecordingSessionshasArtistsForm = ({ rowObject, backendURL, refreshR
 
     const handleSubmit = async (e) => {
         e.preventDefault(); // Prevent default form submission
-       
+        
         const formData = {
-            delete_recording_session_and_artist_pairing_ID: rowObject.recording_session_has_artist_id
+            delete_recording_session_and_artist_pairing_ID: rowObject.Pairing
         };
 
         try {
