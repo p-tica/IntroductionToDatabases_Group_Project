@@ -4,7 +4,7 @@
 -- CS 340 Section 400
 
 -- Citation for this sql file:
--- Date: 05/08/2025
+-- Date: 06/02/2025
 -- Adapted from Exploration - Database Application Design
 -- Original author: Presumed to be Dr. Michael Curry
 -- URLs: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-database-application-design?module_item_id=25352946

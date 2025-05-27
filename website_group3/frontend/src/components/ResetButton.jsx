@@ -1,5 +1,5 @@
 // Citation:
-// Date: 05/22/2025
+// Date: 06/02/2025
 // Referenced MDN Web Docs for window.confirm and window.location.reload()
 // URL: https://developer.mozilla.org/en-US/docs/Web/API/Window/confirm
 // URL: https://developer.mozilla.org/en-US/docs/Web/API/Location/reload
