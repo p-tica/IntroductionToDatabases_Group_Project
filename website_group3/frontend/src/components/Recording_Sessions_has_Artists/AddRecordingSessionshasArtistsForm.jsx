@@ -2,9 +2,10 @@
 // Date: 06/02/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
-// Code in lines 40-43 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
+// Code in lines 41-44 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+// URL: https://copilot.microsoft.com
 
 import React, { useState } from 'react';
 
