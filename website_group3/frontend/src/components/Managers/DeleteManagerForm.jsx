@@ -12,7 +12,7 @@ const DeleteManagerForm = ({ rowObject, backendURL, refreshManagers }) => {
         e.preventDefault(); // Prevent default form submission
        
         const formData = {
-            delete_manager_ID: rowObject.manager_ID,
+            delete_manager_ID: rowObject['Manager ID'],
             delete_manager_name: managerName,
         };
 

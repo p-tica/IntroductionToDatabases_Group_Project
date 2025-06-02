@@ -67,7 +67,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
             >
                 <option value="">Select an Invoice</option>
                 {invoices.map((invoice, index) => (
-                    <option value={invoice.id} key={index}>{invoice.invoice_ID}</option>
+                    <option value={invoice['Invoice ID']} key={index}>{invoice['Invoice ID']}</option>
                 ))}
             </select>
 
@@ -81,7 +81,7 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
             >
                 <option value="">Select a Recording Session</option>
                 {recording_sessions.map((recording_session, index) => (
-                    <option value={recording_session.session_id} key={index}>{recording_session.session_ID}</option>
+                    <option value={recording_session.session_ID} key={index}>{recording_session.session_ID}</option>
                 ))}
             </select>
 

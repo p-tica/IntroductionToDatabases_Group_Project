@@ -69,7 +69,7 @@ const UpdateManagerForm = ({ managers, backendURL, refreshManagers }) => {
             >
                 <option value="">Select a Manager</option>
                 {managers.map((manager) => (
-                    <option key={manager.manager_ID} value={manager.manager_ID}>
+                    <option key={manager['Manager ID']} value={manager['Manager ID']}>
                         {manager.Name}
                     </option>
                 ))}

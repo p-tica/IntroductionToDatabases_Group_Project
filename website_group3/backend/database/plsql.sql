@@ -335,7 +335,7 @@ DELIMITER //
 CREATE PROCEDURE sp_UpdateInvoice(
     IN p_invoice_ID INT,
     IN p_session_ID INT,
-    IN p_session_cost INT,
+    IN p_session_cost DECIMAL(15,2),
     IN p_invoice_paid TINYINT
 )
 

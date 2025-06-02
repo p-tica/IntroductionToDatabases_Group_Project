@@ -15,7 +15,7 @@ const DeleteArtistForm = ({ rowObject, backendURL, refreshArtists }) => {
         e.preventDefault(); // Prevent default form submission
        
         const formData = {
-            delete_artist_ID: rowObject.artist_id,
+            delete_artist_ID: rowObject['Artist ID'],
             delete_artist_name: artistName,
         };
 
@@ -35,7 +35,7 @@ const DeleteArtistForm = ({ rowObject, backendURL, refreshArtists }) => {
                     // Show the error message from backend
                     window.alert(errorData.message);
                 } else {
-                    console.error("Error deleting artist.");
+                    console.error(`Error deleting artist.: ${JSON.stringify(errorData)}`);
                     window.alert("An error occurred while deleting the artist.");
                 }
             }

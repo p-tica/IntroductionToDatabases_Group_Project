@@ -72,7 +72,7 @@ const UpdateArtistForm = ({ artists, managers, backendURL, refreshArtists }) => 
             >
                 <option value="">Select an Artist</option>
                 {artists.map((artist) => (
-                    <option key={artist.artist_id} value={artist.artist_id}>
+                    <option key={artist['Artist ID']} value={artist['Artist ID']}>
                         {artist.Name}
                     </option>
                 ))}
