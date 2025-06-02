@@ -38,7 +38,7 @@ app.get('/artists', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, use a JOIN clause to display the names of the managers
-        const query1 = `SELECT Artists.artist_id, Managers.name AS 'Manager', Artists.name AS 'Name', \
+        const query1 = `SELECT Artists.artist_id AS 'Artist ID', Managers.name AS 'Manager', Artists.name AS 'Name', \
             Artists.phone_number AS 'Phone Number', Artists.email AS 'Email' FROM Artists \
             LEFT JOIN Managers ON Artists.manager_ID = Managers.manager_ID;`;
         const query2 = 'SELECT * FROM Managers;';
@@ -59,7 +59,7 @@ app.get('/managers', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the managers table
-        const query1 = `SELECT Managers.manager_ID, name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
+        const query1 = `SELECT Managers.manager_ID AS 'Manager ID', name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
             FROM Managers`;
         const [managers] = await db.query(query1);
 
@@ -95,7 +95,7 @@ app.get('/invoices', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT Invoices.invoice_ID, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+        const query1 = `SELECT Invoices.invoice_ID AS 'Invoice ID', Invoices.session_ID AS 'Session ID', Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
             FROM Invoices
             JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
             JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID`;
@@ -117,7 +117,7 @@ app.get('/recording_sessions', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT Recording_Sessions.session_ID, Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
+        const query1 = `SELECT Recording_Sessions.session_ID AS 'Session ID', Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
             FROM Recording_Sessions`;
         const query2 = 'SELECT * FROM Rooms;';
         const [recording_sessions] = await db.query(query1);
@@ -137,7 +137,7 @@ app.get('/recording_sessions_has_artists', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the rooms table
-        const query1 = `SELECT recording_sessions_has_artists_ID AS 'Pairing', session_ID, Artists.name AS 'Artist'
+        const query1 = `SELECT recording_sessions_has_artists_ID AS 'Pairing', session_ID AS 'Session ID', Artists.name AS 'Artist'
             FROM Recording_Sessions_has_Artists
             JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;`;
         const query2 = 'SELECT * FROM Recording_Sessions;';
