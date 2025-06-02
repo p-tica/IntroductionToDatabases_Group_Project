@@ -17,7 +17,7 @@
 
 -- display all artists and their information for the Artists page
 
-SELECT Artists.artist_id, Managers.name AS 'Manager', Artists.name AS 'Name',
+SELECT Artists.artist_id AS 'Artist ID', Managers.name AS 'Manager', Artists.name AS 'Name',
 Artists.phone_number AS 'Phone Number', Artists.email AS 'Email' 
 FROM Artists
 LEFT JOIN Managers ON Artists.manager_ID = Managers.manager_ID;
@@ -48,7 +48,7 @@ WHERE artist_ID = :artist_ID_selected_from_artists_page;
 
 -- display all managers and their information for the Managers page
 
-SELECT Managers.manager_ID, name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
+SELECT Managers.manager_ID AS 'Manager ID', name AS 'Name', phone_number AS 'Phone Number', email AS 'Email'
 FROM Managers;
 
 -- ADD Manager
@@ -89,7 +89,7 @@ VALUES (:square_footage, :floor);
 
 -- Display Invoices
 
-SELECT Invoices.invoice_ID, Invoices.session_ID, Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+SELECT Invoices.invoice_ID AS 'Invoice ID', Invoices.session_ID AS 'Session ID', Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
 FROM Invoices
 JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
 JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID;
@@ -113,7 +113,7 @@ WHERE session_ID = :session_ID;
 
 -- Display Recording_Sessions
 
-SELECT Recording_Sessions.session_ID, Recording_Sessions.room_ID as 'Room', Recording_Sessions.duration AS 'Duration'
+SELECT Recording_Sessions.session_ID AS 'Session ID', Recording_Sessions.room_ID AS 'Room', Recording_Sessions.duration AS 'Duration'
 FROM Recording_Sessions;
 
 --
@@ -131,7 +131,7 @@ VALUES ((SELECT room_ID FROM Rooms WHERE room_ID = :room_ID),
 
 -- Display Recording_Sessions_has_Artists
 
-SELECT recording_sessions_has_artists_ID AS 'Pairing', session_ID, Artists.name AS 'Artist'
+SELECT recording_sessions_has_artists_ID AS 'Pairing', session_ID AS 'Session ID', Artists.name AS 'Artist'
 FROM Recording_Sessions_has_Artists
 JOIN Artists ON Recording_Sessions_has_Artists.artist_ID = Artists.artist_ID;
 
