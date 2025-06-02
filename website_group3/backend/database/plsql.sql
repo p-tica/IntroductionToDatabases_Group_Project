@@ -291,12 +291,12 @@ DROP PROCEDURE IF EXISTS sp_CreateRoom;
 
 DELIMITER //
 CREATE PROCEDURE sp_CreateRoom(
-    IN square_footage INT,
-    IN floor INT,
+    IN p_square_footage INT,
+    IN p_floor INT,
     OUT room_ID INT)
 BEGIN
     INSERT INTO Rooms (square_footage, floor) 
-    VALUES (square_footage, floor);
+    VALUES (p_square_footage, p_floor);
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into room_ID;
@@ -312,13 +312,13 @@ DROP PROCEDURE IF EXISTS sp_CreateInvoice;
 DELIMITER //
 CREATE PROCEDURE sp_CreateInvoice(
     IN p_session_ID INT,
-    IN session_cost INT,
-    IN invoice_paid TINYINT,
+    IN p_session_cost DECIMAL(15,2),
+    IN p_invoice_paid TINYINT,
     OUT invoice_ID INT)
 BEGIN
 INSERT INTO Invoices (session_ID, session_cost, invoice_paid)
 VALUES ((SELECT session_ID FROM Recording_Sessions WHERE session_ID = p_session_ID),
-        session_cost, invoice_paid);
+        p_session_cost, p_invoice_paid);
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into invoice_ID;
