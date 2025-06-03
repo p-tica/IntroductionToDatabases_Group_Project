@@ -4,7 +4,7 @@
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code for Create Routes - Rooms "const query2.." and "const [[{ room_ID }]].." copied from Microsoft Copilot
 // Code in lines 497-505 and lines 517-519 (within DELETE Route for Artists) copied from Microsoft Copilot
-// Code in line 102 adapted from Microsoft Copilot
+// Code in line 103 adapted from Microsoft Copilot
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/
