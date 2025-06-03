@@ -74,7 +74,7 @@ WHERE manager_ID = :manager_ID_selected_from_Managers_page;
 
 -- display all rooms and their information for the Rooms page
 
-SELECT Rooms.room_ID, square_footage AS 'Square Footage', floor AS 'Floor'
+SELECT Rooms.room_ID AS 'Room', square_footage AS 'Square Footage', floor AS 'Floor'
 FROM Rooms;
 
 -- ADD Room
