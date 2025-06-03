@@ -3,13 +3,17 @@
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code for Create Routes - Rooms "const query2.." and "const [[{ room_ID }]].." copied from Microsoft Copilot
-// Code in lines 492-502 and lines 513-515 (within DELETE Route for Artists) copied from Microsoft Copilot
+// Code in lines 497-505 and lines 517-519 (within DELETE Route for Artists) copied from Microsoft Copilot
+// Code in line 102 adapted from Microsoft Copilot
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com/
 // AI Tools Prompt: The Submit button to the Add a Room form is not working, I need to press Submit and then refresh the 
 // page for the data entered in the form to be added to the table. This is my current route, [Pasted the Create Route for Rooms].
 // AI Tools Prompt: "How can I add a window.alert when a user tries to delete an artist who has a recording session? [Pasted this file]"
+// AI Tools Prompt: "Invoices is a mysql database table, and each row contains an attribute called invoice_paid that is represented with
+// a tinyint. When displaying this column on my website, I want all 0s to become "No", and all nonzero numbers to become "Yes".
+// How can I do this? [Pasted screenshot of Invoices.jsx and the GET invoices route]"
 
 
 // ########################################
@@ -95,14 +99,14 @@ app.get('/invoices', async (req, res) => {
     try {
         // Create and execute our queries
         // In query1, display the invoices table
-        const query1 = `SELECT Invoices.invoice_ID AS 'Invoice ID', Invoices.session_ID AS 'Session ID', Invoices.session_cost AS 'Cost', Invoices.invoice_paid AS 'Paid?'
+        const query1 = `SELECT Invoices.invoice_ID AS 'Invoice ID', Invoices.session_ID AS 'Session ID', Invoices.session_cost AS 'Cost',
+            CASE WHEN Invoices.invoice_paid = 0 THEN 'No' Else 'Yes' END AS Paid
             FROM Invoices
             JOIN Recording_Sessions ON Invoices.session_ID = Recording_Sessions.session_ID
             JOIN Recording_Sessions_has_Artists ON Recording_Sessions.session_ID = Recording_Sessions_has_Artists.session_ID`;
         const query2 = 'SELECT * FROM Recording_Sessions;';
         const [invoices] = await db.query(query1);
         const [recording_sessions] = await db.query(query2);
-
         res.status(200).json({ invoices, recording_sessions });  // Send the results to the frontend
 
     } catch (error) {
