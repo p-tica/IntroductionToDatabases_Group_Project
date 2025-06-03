@@ -2,7 +2,9 @@
 // Date: 06/02/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
-// Code in lines 44-48 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
+// Code in lines 46-50 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
+// Code in lines 95-96 copied from user Mikel Rychliski on Stack Overflow (URL below)
+// URL: https://stackoverflow.com/a/31575897/30652475
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
 // URL: https://copilot.microsoft.com
@@ -89,6 +91,9 @@ const AddInvoiceForm = ({ backendURL, recording_sessions, refreshInvoices }) => 
                 type="number"
                 name="create_invoice_invoice_paid"
                 id="create_invoice_invoice_paid"
+                max='1'
+                min='0'
+                oninput="validity.valid||(value='');"
                 value={formData.create_invoice_invoice_paid}
                 onChange={handleChange}
                 required
