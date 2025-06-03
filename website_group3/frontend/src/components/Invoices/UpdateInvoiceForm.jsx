@@ -3,7 +3,7 @@
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code in lines 45-50 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
-// Code in lines 106-107 copied from user Mikel Rychliski on Stack Overflow (URL below)
+// Code in line 106 copied from user Mikel Rychliski on Stack Overflow (URL below)
 // URL: https://stackoverflow.com/a/31575897/30652475
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 // URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
@@ -104,7 +104,6 @@ const UpdateInvoiceForm = ({ invoices, recording_sessions, refreshInvoices, back
                 id="update_invoice_invoice_paid"
                 max='1'
                 min='0'
-                oninput="validity.valid||(value='');"
                 value={formData.update_invoice_invoice_paid}
                 onChange={handleChange}
                 required
