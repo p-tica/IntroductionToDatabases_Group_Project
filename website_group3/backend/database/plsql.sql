@@ -4,10 +4,11 @@
 -- CS 340 Section 400
 --
 -- Citation for starter code 
--- Date: 06/02/2025
--- Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
+-- Date: 06/09/2025
+-- Code for every stored procedure adapted from the bsg files from Exploration - Implementing CUD operations in your app
 -- Original author: Presumed to be Dr. Michael Curry
 -- URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-implementing-cud-operations-in-your-app?module_item_id=25352968
+-- No AI Tools used for any of the stored procedures.
 
 -- #############################
 -- RESET database

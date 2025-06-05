@@ -1,5 +1,5 @@
 // Citation for starter code 
-// Date: 06/02/2025
+// Date: 06/09/2025
 // Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
 // Code adapted from the bsg files from Exploration - Web Application Technology
 // Code in lines 41-44 (clearing form fields after submit is pressed) adapted from Microsoft Copilot (see UpdateManagerForm.jsx)
