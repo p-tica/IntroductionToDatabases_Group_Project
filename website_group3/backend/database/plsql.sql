@@ -229,7 +229,7 @@ BEGIN
 
     -- Store the ID of the last inserted row
     SELECT LAST_INSERT_ID() into manager_ID;
-    -- Display the ID of the last inserted artist
+    -- Display the ID of the last inserted manager
     SELECT LAST_INSERT_ID() AS 'new_manager_ID';
 
 END //
@@ -431,7 +431,7 @@ BEGIN
     END;
 
     START TRANSACTION;
-        -- Delete the manager from the Managers table
+        -- Delete the recording session pairing from the Recording Sessions and Artists table
         DELETE FROM `Recording_Sessions_has_Artists` WHERE recording_sessions_has_artists_ID = p_recording_sessions_has_artists_ID;
 
         -- ROW_COUNT() returns the number of rows affected by the preceding statement.
