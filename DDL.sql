@@ -4,7 +4,7 @@
 -- CS 340 Section 400
 --
 -- Citation for this sql file:
--- Date: 06/02/2025
+-- Date: 06/09/2025
 -- Adapted from instructions given in module 5,
 -- "Project Step 2 Draft: Normalized Schema + DDL with Sample Data (Group, on Ed Discussions)"
 -- Original author: Presumed to be Dr. Michael Curry
