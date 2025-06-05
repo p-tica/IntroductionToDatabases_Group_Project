@@ -4,6 +4,7 @@ schlabad@oregonstate.edu
 CS 340 Section 400
 
 Citation for starter code used in the /website_group3 directory
+Individual citations included in each source code file within frontend and backend folders.
 Date: 06/02/2025
 Code adapted from the bsg files from Exploration - Web Application Technology
 Code adapted from the bsg files from Exploration - Implementing CUD operations in your app
