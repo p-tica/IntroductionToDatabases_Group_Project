@@ -1,7 +1,7 @@
 /*
 Citation for starter code
 Date: 06/09/2025
-Code copied from the bsg files from Exploration - Web Application Technology
+Code adapted from the bsg files from Exploration - Web Application Technology
 URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-application-technology-2?module_item_id=25352948
 */
 
@@ -11,6 +11,11 @@ URL: https://canvas.oregonstate.edu/courses/1999601/pages/exploration-web-applic
   text-align: center;
   margin-left: 50px;
   margin-right: 50px;
+  justify-content: center; 
+  align-content: center; 
+  align-items: center; 
+  margin-left: auto; 
+  margin-right: auto;
 }
 
 .logo {
