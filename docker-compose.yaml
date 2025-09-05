@@ -86,8 +86,7 @@ services:
     image: nginx:alpine
     container_name: recording-studio-nginx
     ports:
-      - "80:80"
-      - "443:443"  # For future HTTPS
+      - "80"
     volumes:
       - ./nginx.conf:/tmp/nginx.conf:ro
       # Add SSL certificates here when ready:
