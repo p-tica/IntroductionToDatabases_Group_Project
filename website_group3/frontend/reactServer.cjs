@@ -28,6 +28,6 @@ app.get('/*splat', (req, res) => {
 // ########################################
 // ########## LISTENER
 
-app.listen(PORT, () => {
-    console.log(`Server running: http://classwork.engr.oregonstate.edu:${PORT}...`);
+app.listen(PORT, '0.0.0.0', () => {
+    console.log(`Server running: http://0.0.0.0:${PORT}...`);
 });
