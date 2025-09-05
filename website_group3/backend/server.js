@@ -28,7 +28,11 @@ const app = express();
 
 // Middleware
 const cors = require('cors');
-app.use(cors({ credentials: true, origin: "*" }));
+// Simple CORS for nginx reverse proxy - all requests come from same origin
+app.use(cors({ 
+    credentials: true, 
+    origin: true  // Allow same-origin requests (nginx proxy)
+}));
 app.use(express.json()); // this is needed for post requests
 
 

@@ -10,7 +10,7 @@ services:
       - MYSQL_USER=${DB_USER:-appuser}
       - MYSQL_PASSWORD=${DB_PASSWORD:-apppassword}
     ports:
-      - "3306:3306"
+      - "3307:3306"
     volumes:
       - mariadb_data:/var/lib/mysql
       # Mount initialization scripts if you have any
@@ -30,8 +30,9 @@ services:
       context: ./website_group3/backend
       dockerfile: Dockerfile
     container_name: recording-studio-backend
-    ports:
-      - "60000:60000"
+    # Port only exposed internally to nginx
+    expose:
+      - "60000"
     environment:
       # Database configuration - now pointing to MariaDB container
       - DB_HOST=mariadb
@@ -58,12 +59,13 @@ services:
       context: ./website_group3/frontend
       dockerfile: Dockerfile
     container_name: recording-studio-frontend
-    ports:
-      - "60001:60001"
+    # Port only exposed internally to nginx
+    expose:
+      - "60001"
     environment:
       - NODE_ENV=production
-      # Backend API URL - using service name for internal communication
-      - VITE_API_URL=http://backend:60000
+      # Frontend calls /api routes (handled by nginx)
+      - VITE_API_URL=/api
     networks:
       - app-network
     depends_on:
@@ -78,6 +80,24 @@ services:
       timeout: 10s
       retries: 3
       start_period: 40s
+
+  # Nginx reverse proxy - handles all external traffic
+  nginx:
+    image: nginx:alpine
+    container_name: recording-studio-nginx
+    ports:
+      - "80:80"
+      - "443:443"  # For future HTTPS
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      # Add SSL certificates here when ready:
+      # - ./ssl:/etc/nginx/ssl
+    networks:
+      - app-network
+    depends_on:
+      - frontend
+      - backend
+    restart: unless-stopped
 
 networks:
   app-network:

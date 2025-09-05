@@ -18,9 +18,8 @@ import Recording_Sessions_has_Artists from './pages/Recording_Sessions_has_Artis
 // Components
 import Navigation from './components/Navigation';
 
-// Define the backend port and URL for API requests
-const backendPort = 60000;  // Use the port you assigned to the backend server, this would normally go in a .env file
-const backendURL = `http://localhost:${backendPort}`;
+// Define the backend URL for API requests from environment variable
+const backendURL = import.meta.env.VITE_API_URL || '/api';  // Fallback to /api for nginx setup
 
 function App() {
 
